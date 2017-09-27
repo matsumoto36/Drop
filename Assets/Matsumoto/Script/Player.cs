@@ -52,16 +52,28 @@ public class Player : MonoBehaviour {
 		HP = maxHP;
 		var size = Mathf.Lerp(minSize, maxSize, (float)HP / maxHP);
 		transform.localScale = Vector3.one * size;
+
+		AudioManager.Play(BGMType.Title, 1.0f, true);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Move();
+
+		if(Input.GetKeyDown(KeyCode.F)) {
+			AudioManager.Play(SEType.Button, 1.0f);
+		}
 	}
 
 	void Move() {
+
+		//移動
 		accel += InputManager.GetAccSensor() * 0.1f * (1 - friction);
 		transform.position += accel * speed * Time.deltaTime;
+
+		//向きの変更
+		transform.rotation = Quaternion.AngleAxis(
+			Mathf.Rad2Deg * Mathf.Atan2(accel.y, accel.x) - 90, Vector3.forward);
 	}
 
 	public void Damage(int pow) {

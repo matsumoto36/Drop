@@ -5,7 +5,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour {
 
 	public static Vector3 GetAccSensor() {
-		if(Application.isEditor) {
+		if(!Application.isEditor) {
 
 			var gyro = DebugGyroInterface.GetPositionNormalize();
 			return gyro;

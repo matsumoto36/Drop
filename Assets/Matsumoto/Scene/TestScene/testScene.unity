@@ -551,8 +551,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
-  speed: 2
-  friction: 0.5
+  speed: 10
+  friction: 0.9
   maxSize: 0.5
   minSize: 0.01
   HPStateTable: 3200000014000000
