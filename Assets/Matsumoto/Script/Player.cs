@@ -134,6 +134,7 @@ public class Player : MonoBehaviour {
 			return;
 		}
 
+		statusDuration[statusID] = duration;
 		StartCoroutine(ConformStatus(status));
 	}
 
