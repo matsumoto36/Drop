@@ -134,7 +134,7 @@ public class Player : MonoBehaviour {
 			return;
 		}
 
-		ConformStatus(status);
+		StartCoroutine(ConformStatus(status));
 	}
 
 	public void Damage(int pow) {
