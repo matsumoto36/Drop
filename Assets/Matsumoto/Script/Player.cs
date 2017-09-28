@@ -23,14 +23,15 @@ public class Player : MonoBehaviour {
 	int HP;
 
 	[Header("摩擦")]
-	public float friction;
+	public float maxFriction;
+	public float minFriction;
 
 	[Header("加速度")]
-	public float accelPow;
+	public float maxAccelPow;
+	public float minAccelPow;
 
 	[Header("速度")]
-	public float maxSpeed;
-	public float minSpeed;
+	public float speed;
 
 	[Header("大きさ")]
 	public float maxSize;
@@ -161,10 +162,14 @@ public class Player : MonoBehaviour {
 	void Move() {
 
 		//スピードの決定
-		var speed = Mathf.Lerp(minSpeed, maxSpeed, 1 - (float)HP / maxHP);
+		var t = (float)HP / maxHP;
+		var accelPow = Mathf.Lerp(minAccelPow, maxAccelPow, 1 - t);
+		var friction = Mathf.Lerp(minFriction, maxFriction, t);
+		var dir = InputManager.GetAccSensor();
 
 		//移動
-		accel += InputManager.GetAccSensor() * accelPow * (1 - friction);
+		accel += dir * accelPow;
+		accel -= accel * friction;
 		transform.position += accel * speed * Time.deltaTime;
 
 		//向きの変更
