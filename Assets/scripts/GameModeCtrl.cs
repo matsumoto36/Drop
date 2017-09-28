@@ -18,7 +18,7 @@ public class GameModeCtrl : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        //id = SceneController.publicId;
+        id = SceneController.publicId;
 
         time = 0;
         //自分のインスペクター内からTextコンポーネントを取得。
