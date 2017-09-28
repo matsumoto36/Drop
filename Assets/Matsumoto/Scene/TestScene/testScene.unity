@@ -556,6 +556,6 @@ MonoBehaviour:
   maxSpeed: 10
   minSpeed: 1
   maxSize: 1
-  minSize: 0.01
+  minSize: 0.5
   damagePerSec: 1
-  HPStateTable: 3200000014000000
+  HPStateTable: 320000001400000000000000

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// HPによる状態のリスト
@@ -12,53 +13,57 @@ public enum PlayerHPState {
 }
 
 /// <summary>
-/// 雫の状態のリスト
-/// </summary>
-public enum PlayerStatus {
-	None,
-	Poison,
-	Fly,
-}
-
-/// <summary>
 /// 雫を操作するクラス
 /// </summary>
 public class Player : MonoBehaviour {
 
 	[Header("Player Base Settings")]
+	[Header("HP")]
 	public int maxHP;
 	int HP;
 
+	[Header("摩擦")]
 	public float friction;
+
+	[Header("加速度")]
 	public float accelPow;
 
+	[Header("速度")]
 	public float maxSpeed;
 	public float minSpeed;
 
+	[Header("大きさ")]
 	public float maxSize;
 	public float minSize;
 
+	[Header("継続ダメージ (DPS)")]
 	public float damagePerSec;
-	float dps = 0;
 
 	[Header("Player System Settings")]
 	public int[] HPStateTable;
+	public bool isFreeze = true;
+
+	Coroutine changeSizeRoutine;
+	Vector3 accel;
+
+	Status[] statusEffect;
+	float[] statusDuration;
 
 	public PlayerHPState HPState {
 		get; private set;
 	}
 
-	public PlayerStatus status {
-		get; private set;
-	}
-
-	bool isFreeze = true;
-	Coroutine changeSizeRoutine;
-	Vector3 accel;
-
-
 	// Use this for initialization
 	void Start () {
+
+		statusDuration = new float[Enum.GetNames(typeof(PlayerStatus)).Length];
+
+		//ステータスの効果を持ってくる
+		statusEffect = new Status[Enum.GetNames(typeof(PlayerStatus)).Length];
+		statusEffect[0] = null;
+		statusEffect[1] = null;
+		statusEffect[2] = null;
+
 		HP = maxHP;
 		var size = Mathf.Lerp(minSize, maxSize, (float)HP / maxHP);
 		transform.localScale = Vector3.one * size;
@@ -66,12 +71,6 @@ public class Player : MonoBehaviour {
 		AudioManager.Play(BGMType.Title, 1.0f, true);
 
 		Initialize();
-	}
-
-	void Initialize() {
-
-		isFreeze = false;
-		StartCoroutine(ContinuationDamage());
 	}
 
 	// Update is called once per frame
@@ -86,18 +85,46 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	void Move() {
+	void Initialize() {
 
-		//スピードの決定
-		var speed = Mathf.Lerp(minSpeed, maxSpeed, 1 - (float)HP / maxHP);
+		isFreeze = false;
+		StartCoroutine(ContinuationDamage());
+	}
 
-		//移動
-		accel += InputManager.GetAccSensor() * accelPow * (1 - friction);
-		transform.position += accel * speed * Time.deltaTime;
+	/// <summary>
+	/// その状態かどうかを調べる
+	/// </summary>
+	/// <returns></returns>
+	public bool IsConfStatus(PlayerStatus status) {
 
-		//向きの変更
-		transform.rotation = Quaternion.AngleAxis(
-			Mathf.Rad2Deg * Mathf.Atan2(accel.y, accel.x) - 90, Vector3.forward);
+		if(status != PlayerStatus.None) {
+			return statusDuration[(int)status] != 0;
+		}
+
+		bool anyConfStatus = false;
+		for(int i = 1;i < statusDuration.Length;i++) {
+			anyConfStatus |= statusDuration[(int)status] != 0;
+		}
+
+		return anyConfStatus;
+	}
+
+	/// <summary>
+	/// プレイヤーの状態を一定時間変化させる
+	/// </summary>
+	/// <param name="status">タイプ</param>
+	/// <param name="duration">効果時間</param>
+	public void SetStatus(PlayerStatus status, float duration) {
+		
+
+		var statusID = (int)status;
+		if(statusDuration[statusID] != 0) {
+			//既に実行しているので、更新して終了する
+			statusDuration[statusID] = duration;
+			return;
+		}
+
+		ConformStatus(status);
 	}
 
 	public void Damage(int pow) {
@@ -111,6 +138,9 @@ public class Player : MonoBehaviour {
 			Death();
 			return;
 		}
+
+		//状態の変更
+		if(HP <= HPStateTable[(int)HPState]) HPState++;
 
 		//サイズ変更
 		UpdateSize();
@@ -126,6 +156,20 @@ public class Player : MonoBehaviour {
 		changeSizeRoutine = StartCoroutine(ChangeSize(new Vector3()));
 
 		//ゲームオーバー
+	}
+
+	void Move() {
+
+		//スピードの決定
+		var speed = Mathf.Lerp(minSpeed, maxSpeed, 1 - (float)HP / maxHP);
+
+		//移動
+		accel += InputManager.GetAccSensor() * accelPow * (1 - friction);
+		transform.position += accel * speed * Time.deltaTime;
+
+		//向きの変更
+		transform.rotation = Quaternion.AngleAxis(
+			Mathf.Rad2Deg * Mathf.Atan2(accel.y, accel.x) - 90, Vector3.forward);
 	}
 
 	void UpdateSize() {
@@ -163,5 +207,30 @@ public class Player : MonoBehaviour {
 		}
 
 		transform.localScale = size;
+	}
+
+	IEnumerator ConformStatus(PlayerStatus status) {
+
+		var statusID = (int)status;
+
+		//開始時の処理
+		if(statusID == 0) yield break;
+
+		//効果(開始時)
+		statusEffect[statusID].StartEffect(this);
+
+
+		while(statusDuration[statusID] > 0) {
+			statusDuration[statusID] -= Time.deltaTime;
+
+			//効果(持続)
+			statusEffect[statusID].EffectLoop(this);
+
+			yield return null;
+		}
+		statusDuration[statusID] = 0;
+
+		//効果(終了時)
+		statusEffect[statusID].EndEffect(this);
 	}
 }
