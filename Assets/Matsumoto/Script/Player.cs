@@ -71,8 +71,8 @@ public class Player : MonoBehaviour {
 		//ステータスの効果を持ってくる
 		statusEffect = new Status[Enum.GetNames(typeof(PlayerStatus)).Length];
 		statusEffect[0] = null;
-		statusEffect[1] = null;
-		statusEffect[2] = null;
+		statusEffect[1] = new StatusPoison();
+		statusEffect[2] = new StatusFly();
 
 		HP = maxHP;
 		var size = Mathf.Lerp(minSize, maxSize, (float)HP / maxHP);
@@ -274,5 +274,12 @@ public class Player : MonoBehaviour {
 		isFreeze = true;
 
 		//ゲームオーバー
+	}
+
+	public void _SetPoison() {
+		SetStatus(PlayerStatus.Poison, 10.0f);
+	}
+	public void _SetFly() {
+		SetStatus(PlayerStatus.Fly, 10.0f);
 	}
 }
