@@ -20,7 +20,6 @@ public class Player : MonoBehaviour {
 	[Header("Player Base Settings")]
 	[Header("HP")]
 	public int maxHP;
-	int HP;
 
 	[Header("摩擦")]
 	public float maxFriction;
@@ -32,23 +31,33 @@ public class Player : MonoBehaviour {
 
 	[Header("速度")]
 	public float speed;
+	public float maxSpeed;
 
 	[Header("大きさ")]
 	public float maxSize;
 	public float minSize;
 
-	[Header("継続ダメージ (DPS)")]
-	public float damagePerSec;
+	[Header("継続ダメージ(n秒に1ダメ)")]
+	public float secPerDamage;
 
 	[Header("Player System Settings")]
 	public int[] HPStateTable;
+
+	[Header("死亡時回転速度")]
+	public float deathRotSpeed;
+
 	public bool isFreeze = true;
 
 	Coroutine changeSizeRoutine;
 	Vector3 accel;
+	bool isDeath;
 
 	Status[] statusEffect;
 	float[] statusDuration;
+
+	public int HP {
+		get; private set;
+	}
 
 	public PlayerHPState HPState {
 		get; private set;
@@ -153,10 +162,8 @@ public class Player : MonoBehaviour {
 
 		HP = 0;
 
-		if(changeSizeRoutine != null) StopCoroutine(changeSizeRoutine);
-		changeSizeRoutine = StartCoroutine(ChangeSize(new Vector3()));
-
-		//ゲームオーバー
+		//死亡時のアニメーション開始
+		StartCoroutine(PlayerDeathAnim());
 	}
 
 	void Move() {
@@ -170,11 +177,20 @@ public class Player : MonoBehaviour {
 		//移動
 		accel += dir * accelPow;
 		accel -= accel * friction;
-		transform.position += accel * speed * Time.deltaTime;
+
+		var moveVec = accel * speed;
+		if(moveVec.magnitude > maxSpeed) {
+			moveVec = moveVec.normalized * maxSpeed;
+		}
+
+		transform.position += moveVec * Time.deltaTime;
 
 		//向きの変更
-		transform.rotation = Quaternion.AngleAxis(
-			Mathf.Rad2Deg * Mathf.Atan2(accel.y, accel.x) - 90, Vector3.forward);
+		if(!isDeath) {
+			transform.rotation = Quaternion.AngleAxis(
+				Mathf.Rad2Deg * Mathf.Atan2(accel.y, accel.x) - 90, Vector3.forward);
+		}
+
 	}
 
 	void UpdateSize() {
@@ -189,7 +205,7 @@ public class Player : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator ContinuationDamage() {
-		yield return new WaitForSeconds(1.0f / damagePerSec);
+		yield return new WaitForSeconds(secPerDamage);
 		Damage(1);
 		StartCoroutine(ContinuationDamage());
 	}
@@ -201,13 +217,12 @@ public class Player : MonoBehaviour {
 	/// <returns></returns>
 	IEnumerator ChangeSize(Vector3 size) {
 
-		var changeSpeed = 0.1f;
 		var changeTime = 1.0f;
 		var t = 0.0f;
 
 		while(t < changeTime) {
 			t += Time.deltaTime;
-			transform.localScale = Vector3.Lerp(transform.localScale, size, changeSpeed);
+			transform.localScale = Vector3.Lerp(transform.localScale, size, t);
 			yield return null;
 		}
 
@@ -237,5 +252,27 @@ public class Player : MonoBehaviour {
 
 		//効果(終了時)
 		statusEffect[statusID].EndEffect(this);
+	}
+
+	IEnumerator PlayerDeathAnim() {
+
+		isDeath = true;
+		GetComponent<Collider2D>().enabled = false;
+
+		//サイズを小さくする
+		if(changeSizeRoutine != null) StopCoroutine(changeSizeRoutine);
+		changeSizeRoutine = StartCoroutine(ChangeSize(new Vector3()));
+
+		float t = 0f;
+		while(t < 1.0f) {
+			t += Time.deltaTime;
+
+			transform.rotation *= Quaternion.AngleAxis(deathRotSpeed, Vector3.forward);
+			yield return null;
+		}
+
+		isFreeze = true;
+
+		//ゲームオーバー
 	}
 }

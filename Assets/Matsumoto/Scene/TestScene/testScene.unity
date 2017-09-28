@@ -754,13 +754,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
-  maxFriction: 0.01
+  maxFriction: 0.1
   minFriction: 0
   maxAccelPow: 2
-  minAccelPow: 0.1
+  minAccelPow: 1
   speed: 1
+  maxSpeed: 10
   maxSize: 1
   minSize: 0.5
-  damagePerSec: 1
+  secPerDamage: 1
   HPStateTable: 320000001400000000000000
   isFreeze: 1
+  deathRotSpeed: 25
