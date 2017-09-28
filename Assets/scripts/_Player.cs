@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class _Player : MonoBehaviour {
 
     // 速度
     public Vector2 SPEED = new Vector2(0.05f, 0.05f);

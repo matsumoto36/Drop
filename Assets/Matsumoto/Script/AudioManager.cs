@@ -82,30 +82,22 @@ public class AudioManager : MonoBehaviour {
 
 	}
 
-	void _Play(SEType type, float vol) {
+	AudioSource _Play(SEType type, float vol, bool autoDelete) {
 
-		AudioSource src = new GameObject("[Audio SE - " + type.ToString() + "]").AddComponent<AudioSource>();
+		AudioSource src = new GameObject("[Audio SE - " + type.ToString() +  "]").AddComponent<AudioSource>();
 		src.transform.SetParent(myManager.transform);
 		src.clip = SEclips[(int)type];
 		src.volume = vol;
 		src.outputAudioMixerGroup = mixerGroups[0];
 		src.Play();
 
-		Destroy(src.gameObject, SEclips[(int)type].length + 0.1f);
-	}
-
-	AudioSource _Play(SEType type) {
-
-		AudioSource src = new GameObject("[Audio SE - " + type.ToString() + " - Editable]").AddComponent<AudioSource>();
-		src.transform.SetParent(myManager.transform);
-		src.clip = SEclips[(int)type];
-		src.outputAudioMixerGroup = mixerGroups[0];
-		src.Play();
+		if(!autoDelete)
+			Destroy(src.gameObject, SEclips[(int)type].length + 0.1f);
 
 		return src;
 	}
 
-	void _Play(BGMType type, float vol, bool isLoop) {
+	AudioSource _Play(BGMType type, float vol, bool isLoop) {
 
 		if(nowPlayingBGM) Destroy(nowPlayingBGM.gameObject);
 
@@ -125,6 +117,8 @@ public class AudioManager : MonoBehaviour {
 
 		nowPlayingBGM = src;
 		latestPlayBGMType = type;
+
+		return src;
 	}
 
 	void _FadeIn(float fadeTime, BGMType type, float vol, bool isLoop) {
@@ -135,23 +129,29 @@ public class AudioManager : MonoBehaviour {
 		myManager.StartCoroutine(FadeOutAnim(fadeTime));
 	}
 
+	#region Play SE
+
 	/// <summary>
 	/// SEを再生する
 	/// </summary>
 	/// <param name="type">SEの内容</param>
 	/// <param name="vol">音量</param>
-	public static void Play(SEType type, float vol) {
-		myManager._Play(type, vol);
+	public static AudioSource Play(SEType type) {
+		return myManager._Play(type, 1.0f, true);
 	}
 
-	/// <summary>
-	/// SEを再生するが、編集可能
-	/// </summary>
-	/// <param name="type">SEの内容</param>
-	/// <returns>再生されているSE</returns>
-	public static AudioSource Play(SEType type) {
-		return myManager._Play(type);
+	public static AudioSource Play(SEType type, float vol) {
+		return myManager._Play(type, vol, true);
 	}
+
+	public static AudioSource Play(SEType type, float vol, bool autoDelete) {
+		return myManager._Play(type, vol, autoDelete);
+
+	}
+
+	#endregion
+
+	#region Play BGM
 
 	/// <summary>
 	/// BGMを再生する
@@ -159,9 +159,21 @@ public class AudioManager : MonoBehaviour {
 	/// <param name="type">BGMの内容</param>
 	/// <param name="vol">音量</param>
 	/// <param name="isLoop">ループ再生するか</param>
-	public static void Play(BGMType type, float vol, bool isLoop) {
-		myManager._Play(type, vol, isLoop);
+	public static AudioSource Play(BGMType type) {
+		return myManager._Play(type, 1.0f, true);
 	}
+
+	public static AudioSource Play(BGMType type, float vol) {
+		return myManager._Play(type, vol, true);
+	}
+
+	public static AudioSource Play(BGMType type, float vol, bool isLoop) {
+		return myManager._Play(type, vol, isLoop);
+	}
+
+	#endregion
+
+	#region FadeIn
 
 	/// <summary>
 	/// BGMをフェードインさせる
@@ -170,9 +182,20 @@ public class AudioManager : MonoBehaviour {
 	/// <param name="type">新しいBGMのタイプ</param>
 	/// <param name="vol">新しいBGMの大きさ</param>
 	/// <param name="isLoop">新しいBGMがループするか</param>
+	public static void FadeIn(float fadeTime, BGMType type) {
+		myManager._FadeIn(fadeTime, type, 1.0f, true);
+	}
+
+	public static void FadeIn(float fadeTime, BGMType type, float vol) {
+		myManager._FadeIn(fadeTime, type, vol, true);
+	}
+
 	public static void FadeIn(float fadeTime, BGMType type, float vol, bool isLoop) {
 		myManager._FadeIn(fadeTime, type, vol, isLoop);
 	}
+
+	#endregion
+
 
 	/// <summary>
 	/// BGMをフェードアウトさせる

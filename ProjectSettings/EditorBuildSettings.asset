@@ -6,5 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/Scenes/Game.unity
     guid: 980c4521beac6754db78850c8105b8c7
+=======
+    path: Assets/Matsumoto/Scene/TestScene/testScene.unity
+    guid: 00000000000000000000000000000000
+>>>>>>> c36f9281f5a0c8feebacba40496d66e0e8248e3b
