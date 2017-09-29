@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Muteki : MonoBehaviour
-{
+public class fly : MonoBehaviour {
 
-	// Use this for initialization
-	void Start()
-	{
 
+	void Start () {
+		
 	}
-
+	
 	// Update is called once per frame
-	void Update()
-	{
-
+	void Update () {
+		
 	}
 	void OnCollisionEnter2D(Collision2D collision)
 	{
@@ -25,4 +22,6 @@ public class Muteki : MonoBehaviour
 		}
 
 	}
+
+	//transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time, 1), transform.position.z);
 }

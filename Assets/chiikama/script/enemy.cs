@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class enemy : MonoBehaviour {
 
-	public bool damege = false;//フラグ
 	private new SpriteRenderer renderer;
 	// Use this for initialization
 	void Start () {
@@ -17,11 +16,19 @@ public class enemy : MonoBehaviour {
 	}
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		if(!damege && collider.gameObject.tag == "enemy")
+		Player player = collider.GetComponent<Player>();
+		if(player)
 		{
-			Debug.Log("damege"); 
-			                                  
-			
+			if (player.IsConfStatus(PlayerStatus.Poison))
+			{
+				Destroy(gameObject);
+			}
+			else
+			{
+				Debug.Log("damege");
+				player.Damage(10);
+			}
+
 		}
 	}
 
