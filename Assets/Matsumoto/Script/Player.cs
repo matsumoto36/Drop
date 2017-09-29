@@ -17,6 +17,9 @@ public enum PlayerHPState {
 /// </summary>
 public class Player : MonoBehaviour {
 
+	const int PLAYER_MOVABLE_X = 4;
+	const int PLAYER_MOVABLE_Y = 7;
+
 	[Header("Player Base Settings")]
 	[Header("HP")]
 	public int maxHP;
@@ -169,6 +172,8 @@ public class Player : MonoBehaviour {
 
 	void Move() {
 
+		var pos = transform.position;
+
 		//スピードの決定
 		var t = (float)HP / maxHP;
 		var accelPow = Mathf.Lerp(minAccelPow, maxAccelPow, 1 - t);
@@ -184,7 +189,20 @@ public class Player : MonoBehaviour {
 			moveVec = moveVec.normalized * maxSpeed;
 		}
 
-		transform.position += moveVec * Time.deltaTime;
+		pos += moveVec * Time.deltaTime;
+
+		//判定
+		if(Mathf.Abs(pos.x) > PLAYER_MOVABLE_X) {
+			pos.x = pos.x / Mathf.Abs(pos.x) * PLAYER_MOVABLE_X;
+			accel.x = 0;
+		}
+
+		if(Mathf.Abs(pos.y) > PLAYER_MOVABLE_Y) {
+			pos.y = pos.y / Mathf.Abs(pos.y) * PLAYER_MOVABLE_Y;
+			accel.y = 0;
+		}
+
+		transform.position = pos;
 
 		//向きの変更
 		if(!isDeath) {
