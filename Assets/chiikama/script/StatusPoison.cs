@@ -7,9 +7,11 @@ public class StatusPoison : Status {
 
 	public override void StartEffect(Player player)
 	{
-				gameObject.GetComponent<Renderer>().material.color = Color.green;
-				Destroy(player.gameObject);
+		player.GetComponent<Renderer>().material.color = Color.green;
+		Debug.Log("green");
+			
 	}
+
 
 	public override void EffectLoop(Player player)
 	{
@@ -17,6 +19,7 @@ public class StatusPoison : Status {
 
 	public override void EndEffect(Player player)
 	{
+		player.GetComponent<Renderer>().material.color = Color.white;
 	}
 
 
