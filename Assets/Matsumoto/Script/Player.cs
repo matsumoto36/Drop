@@ -210,10 +210,14 @@ public class Player : MonoBehaviour {
 
 		transform.position = pos;
 
-		//向きの変更
 		if(!isDeath) {
-			transform.rotation = Quaternion.AngleAxis(
-				Mathf.Rad2Deg * Mathf.Atan2(accel.y, accel.x) - 90, Vector3.forward);
+
+			//向きの変更
+			var rot = Quaternion.AngleAxis(
+				Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x) - 90, Vector3.forward);
+
+			transform.rotation =
+				Quaternion.Lerp(transform.rotation, rot, 0.3f);
 		}
 
 		//カメラの移動
