@@ -37,7 +37,7 @@ public class ObjectCtrl : FloorMove
 	void Update ()
     {
         //playerのpositionからオブジェクトを更新
-        if (player.position.y >= LoadPos)
+        if (player.position.y > LoadPos-1)
         {
             //乱数でプレファブから選択、選択したものは次回選択から除外
             int selectIndex = choose[Random.Range(0, choose.Count)];
