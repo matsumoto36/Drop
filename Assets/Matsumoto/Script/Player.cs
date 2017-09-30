@@ -51,6 +51,7 @@ public class Player : MonoBehaviour {
 
 	public bool isFreeze = true;
 
+	CameraControl cameraControl;
 	Coroutine changeSizeRoutine;
 	Vector3 accel;
 	bool isDeath;
@@ -68,6 +69,8 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		cameraControl = FindObjectOfType<CameraControl>();
 
 		statusDuration = new float[Enum.GetNames(typeof(PlayerStatus)).Length];
 
@@ -87,7 +90,7 @@ public class Player : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		if(isFreeze) return;
 
@@ -191,14 +194,17 @@ public class Player : MonoBehaviour {
 
 		pos += moveVec * Time.deltaTime;
 
-		//判定
+		//X判定
 		if(Mathf.Abs(pos.x) > PLAYER_MOVABLE_X) {
 			pos.x = pos.x / Mathf.Abs(pos.x) * PLAYER_MOVABLE_X;
 			accel.x = 0;
 		}
 
-		if(Mathf.Abs(pos.y) > PLAYER_MOVABLE_Y) {
-			pos.y = pos.y / Mathf.Abs(pos.y) * PLAYER_MOVABLE_Y;
+		//Y判定
+		var camPosY = cameraControl.transform.position.y;
+		var checkPosY = pos.y - camPosY;
+		if(Math.Abs(checkPosY) > PLAYER_MOVABLE_Y) {
+			pos.y = checkPosY / Mathf.Abs(checkPosY) * PLAYER_MOVABLE_Y + camPosY;
 			accel.y = 0;
 		}
 
@@ -209,6 +215,9 @@ public class Player : MonoBehaviour {
 			transform.rotation = Quaternion.AngleAxis(
 				Mathf.Rad2Deg * Mathf.Atan2(accel.y, accel.x) - 90, Vector3.forward);
 		}
+
+		//カメラの移動
+		cameraControl.Move();
 
 	}
 
