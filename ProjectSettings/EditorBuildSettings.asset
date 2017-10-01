@@ -4,4 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/chiikama/Scene/TitleScene.unity
+    guid: 59b7bbb95ff897148ad717b2e28d1dfa
+  - enabled: 1
+    path: Assets/chiikama/Scene/GameScene.unity
+    guid: 9fb94eebd87755c418a8831e43bb1550
+  - enabled: 1
+    path: Assets/chiikama/Scene/MenuScene.unity
+    guid: 00000000000000000000000000000000
