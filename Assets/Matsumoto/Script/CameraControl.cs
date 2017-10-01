@@ -31,6 +31,8 @@ public class CameraControl : MonoBehaviour {
 
 		//ステージの下限まで移動した場合はスクロールしない
 		if((_StageCount - 1) * STAGE_HEIGHT <= Mathf.Abs(pos.y)) {
+			pos.y = -(_StageCount - 1) * STAGE_HEIGHT;
+			transform.position = pos;
 			return;
 		}
 
