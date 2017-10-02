@@ -20,6 +20,9 @@ public class Player : MonoBehaviour {
 	const int PLAYER_MOVABLE_X = 4;
 	const int PLAYER_MOVABLE_Y = 7;
 
+	const float DROPMARK_SPAWN_DIST = .1f;
+	const float DROPMARK_SIZE_RATIO = 0.2f;
+
 	[Header("Player Base Settings")]
 	[Header("HP")]
 	public int maxHP;
@@ -51,13 +54,22 @@ public class Player : MonoBehaviour {
 
 	public bool isFreeze = true;
 
+	//動き
 	CameraControl cameraControl;
 	Coroutine changeSizeRoutine;
 	Vector3 accel;
-	bool isDeath;
 
+	//雫の跡
+	DropMark dropMarkPre;
+	Vector3 dropMarkPosLast;
+
+	//ステータス管理
 	Status[] statusEffect;
 	float[] statusDuration;
+
+	//フラグ
+	bool isDeath;
+
 
 	public int HP {
 		get; private set;
@@ -69,6 +81,8 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		dropMarkPre = Resources.Load<DropMark>("Prefabs/DropMark");
 
 		cameraControl = FindObjectOfType<CameraControl>();
 
@@ -94,7 +108,11 @@ public class Player : MonoBehaviour {
 
 		if(isFreeze) return;
 
+		//移動
 		Move();
+
+		//雫の跡更新
+		UpdateDropMark();
 
 		if(Input.GetKeyDown(KeyCode.F)) {
 			Damage(10);
@@ -230,6 +248,19 @@ public class Player : MonoBehaviour {
 		var size = Mathf.Lerp(minSize, maxSize, (float)HP / maxHP);
 		if(changeSizeRoutine != null) StopCoroutine(changeSizeRoutine);
 		changeSizeRoutine = StartCoroutine(ChangeSize(Vector3.one * size));
+	}
+
+	void UpdateDropMark() {
+
+		var spawnDist = DROPMARK_SPAWN_DIST * DROPMARK_SIZE_RATIO * 5;
+
+		//一定距離離れていたら出す
+		while((transform.position - dropMarkPosLast).magnitude > spawnDist) {
+			var nextSpawnOffset = (transform.position - dropMarkPosLast).normalized * spawnDist;
+			dropMarkPosLast = dropMarkPosLast + nextSpawnOffset;
+			var d = Instantiate(dropMarkPre, dropMarkPosLast, Quaternion.identity);
+			d.transform.localScale = transform.localScale * DROPMARK_SIZE_RATIO;
+		}
 	}
 
 	/// <summary>
