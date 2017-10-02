@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Test_CheckSounds : MonoBehaviour {
 
+	public SEType SEtype;
+
 	// Use this for initialization
 	void Start () {
-		AudioManager.Play(BGMType.Title, 1.0f, true);
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void PlaySounds() {
+		AudioManager.Play(SEtype);
 	}
 }
