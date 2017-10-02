@@ -9,6 +9,7 @@ public class FloorMove : MonoBehaviour
     public static Transform player;
     public static float LoadPos;
     int a,b,c,d;
+    public static float Goalpos = -100;
 
 	// Use this for initialization
 	void Start ()
@@ -18,22 +19,18 @@ public class FloorMove : MonoBehaviour
             floor[i] = GameObject.Find("Floor" + i);
         }
         player = GameObject.Find("Player").transform;
-        LoadPos = 30;
+        LoadPos = -22.5f;
         a = 0;b = 1;c = 2;d = 0;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (player.position.y >= LoadPos)
+        if (player.position.y <= LoadPos)
         {
-            floor[a].transform.position += Vector3.up * 60;
-            LoadPos += 20;
+            floor[a].transform.position -= Vector3.up * 45;
+            LoadPos -= 15;
             a = b;b = c;c = d;d = a;
-        }
-        if (player.position.y > 1000)
-        {
-            GoalGuide.guideChoose();
         }
 	}
 }
