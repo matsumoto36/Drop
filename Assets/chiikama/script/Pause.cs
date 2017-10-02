@@ -4,42 +4,74 @@ using UnityEngine;
 using System;
 
 public class Pause : MonoBehaviour {
-	Behaviour[] pauseBehavs = null;
+
 	// Use this for initialization
+	static List<Pause> targets = new List<Pause>();
+	Behaviour[] pauseBehavs = null;
+
 	void Start () {
-		
+		targets.Add(this);
 	}
-	void OnPause()
+
+	void OnDestroy()
 	{
-		if (pauseBehavs != null)
+		targets.Remove(this);
+	}
+
+	void OnPause()//ポーズされたとき
+	{
+		if(pauseBehavs != null)
 		{
 			return;
 		}
-		//有効なBehaviourを取得
-		pauseBehavs = Array.FindAll(GetComponentsInChildren<Behaviour>(), (obj) => { return obj.enabled; });
+		pauseBehavs = Array.FindAll(GetComponentsInChildren<Behaviour>(), (obj) => {
+			if (obj == null)
+			{
+				return false;
+			}
+			return obj.enabled;
+		});
+
 		foreach (var com in pauseBehavs)
 		{
 			com.enabled = false;
 		}
 	}
-	void OnResume()
+
+	void OnResume()//ポーズ解除されたとき
 	{
-		if (pauseBehavs == null)
+		if(pauseBehavs == null)
 		{
 			return;
 		}
-
-		// ポーズ前の状態にBehaviourの有効状態を復元
-		foreach (var com in pauseBehavs)
+		foreach(var com in pauseBehavs)
 		{
 			com.enabled = true;
 		}
-
 		pauseBehavs = null;
+
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
+	public static void InPause()
+	{
+		foreach (Pause obj in FindObjectsOfType<Pause>())
+		{
+			Debug.Log(obj.gameObject.name);
+			if(obj != null)
+			{
+				obj.OnPause();
+			}
+		}
+	}
+	public static void Resume()
+	{
+		foreach (var obj in targets)
+		{
+			obj.OnResume();
+		}
 	}
 }
+
+	
+
+

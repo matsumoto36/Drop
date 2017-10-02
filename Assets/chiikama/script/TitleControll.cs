@@ -5,7 +5,7 @@ using UnityEngine;
 public class TitleControll : MonoBehaviour {
 	public void ToMenuScene()
 	{
-		SceneFader.MoveToScene("MenuScene");
+		SceneFader.MoveToScene("MenuScene", SceneMoveType.Short);
 	}
 	// Use this for initialization
 	void Start () {
