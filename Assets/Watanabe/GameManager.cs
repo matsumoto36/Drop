@@ -8,6 +8,12 @@ public class GameManager : MonoBehaviour {
     public float limitTime;		//制限時間
     public Text timetext;
 
+    public float playerpos;
+    public float stagelength;
+    public Slider stageprogress;
+    //↓追加
+    float _hp = 0;
+
     float time;//時間を記録する小数も入る変数
     Text text;
     //private bool    m_isVisibleTimer    = false;
@@ -49,7 +55,17 @@ public class GameManager : MonoBehaviour {
 
         _textGameManager.text = "";
 
+        ////HP上昇
+        //_hp += 1;
+        //if (_hp > stageprogress.maxValue)
+        //{
+        //    // 最大を超えたら0に戻す
+        //    _hp = stageprogress.minValue;
+        //}
+        // HPゲージに値を設定
+        stageprogress.value = playerpos / stagelength;
 
+        
     }
     /// <summary>
     /// ゲームを開始するときに
