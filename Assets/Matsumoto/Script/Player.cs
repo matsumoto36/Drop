@@ -17,6 +17,9 @@ public enum PlayerHPState {
 /// </summary>
 public class Player : MonoBehaviour {
 
+	const int PLAYER_MOVABLE_X = 4;
+	const int PLAYER_MOVABLE_Y = 7;
+
 	[Header("Player Base Settings")]
 	[Header("HP")]
 	public int maxHP;
@@ -48,6 +51,7 @@ public class Player : MonoBehaviour {
 
 	public bool isFreeze = true;
 
+	CameraControl cameraControl;
 	Coroutine changeSizeRoutine;
 	Vector3 accel;
 	bool isDeath;
@@ -65,6 +69,8 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		cameraControl = FindObjectOfType<CameraControl>();
 
 		statusDuration = new float[Enum.GetNames(typeof(PlayerStatus)).Length];
 
@@ -84,7 +90,7 @@ public class Player : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		if(isFreeze) return;
 
@@ -169,6 +175,8 @@ public class Player : MonoBehaviour {
 
 	void Move() {
 
+		var pos = transform.position;
+
 		//スピードの決定
 		var t = (float)HP / maxHP;
 		var accelPow = Mathf.Lerp(minAccelPow, maxAccelPow, 1 - t);
@@ -184,13 +192,36 @@ public class Player : MonoBehaviour {
 			moveVec = moveVec.normalized * maxSpeed;
 		}
 
-		transform.position += moveVec * Time.deltaTime;
+		pos += moveVec * Time.deltaTime;
 
-		//向きの変更
-		if(!isDeath) {
-			transform.rotation = Quaternion.AngleAxis(
-				Mathf.Rad2Deg * Mathf.Atan2(accel.y, accel.x) - 90, Vector3.forward);
+		//X判定
+		if(Mathf.Abs(pos.x) > PLAYER_MOVABLE_X) {
+			pos.x = pos.x / Mathf.Abs(pos.x) * PLAYER_MOVABLE_X;
+			accel.x = 0;
 		}
+
+		//Y判定
+		var camPosY = cameraControl.transform.position.y;
+		var checkPosY = pos.y - camPosY;
+		if(Math.Abs(checkPosY) > PLAYER_MOVABLE_Y) {
+			pos.y = checkPosY / Mathf.Abs(checkPosY) * PLAYER_MOVABLE_Y + camPosY;
+			accel.y = 0;
+		}
+
+		transform.position = pos;
+
+		if(!isDeath) {
+
+			//向きの変更
+			var rot = Quaternion.AngleAxis(
+				Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x) - 90, Vector3.forward);
+
+			transform.rotation =
+				Quaternion.Lerp(transform.rotation, rot, 0.3f);
+		}
+
+		//カメラの移動
+		cameraControl.Move();
 
 	}
 
