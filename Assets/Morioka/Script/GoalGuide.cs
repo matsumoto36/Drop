@@ -22,4 +22,9 @@ public class GoalGuide : FloorMove
         Instantiate(Goal, new Vector3(0, GoalPos, 0), Quaternion.identity);
         Instantiate(GuidePrefab, HighPos, Quaternion.identity);
     }
+
+    private void Update()
+    {
+        
+    }
 }

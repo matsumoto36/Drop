@@ -23,7 +23,7 @@ public class DebugGyroInterface : MonoBehaviour {
 		}
 		else {
 			myInterface = this;
-			DontDestroyOnLoad(gameObject);
+			//DontDestroyOnLoad(gameObject);
 		}
 	}
 	

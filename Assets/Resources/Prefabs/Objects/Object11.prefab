@@ -26,6 +26,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!1 &1056668290481056
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,6 +43,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+=======
+>>>>>>> ac1b2d6d770fd9b00d4988e15f4d3eab58690505
 --- !u!1 &1150850844898138
 GameObject:
   m_ObjectHideFlags: 0

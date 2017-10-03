@@ -14,33 +14,23 @@ public class UIManager : MonoBehaviour
 
 	public void Awake()
 	{
+	
+	
 		Pause.ClearPauseList();
 	}
 
 	public void RetryButton()
 	{
-		//シーン移動中は実行しない
-
-		if (_isPause == false)
-		{
-			Pause.Pauser();
-		}
-	
+		SceneFader.MoveToScene("test", SceneMoveType.Short);
 	}
 	public void BackButton()
 	{
-		//シーン移動中は実行しない
 
-		if (_isPause == false)
-		{
-			Pause.Pauser();
-
-		}
 	}
 
 	public void MenuButton()
 	{
-		
+		SceneFader.MoveToScene("MenuScene", SceneMoveType.Short);
 	}
 
 
@@ -70,6 +60,7 @@ public class UIManager : MonoBehaviour
 		isActiveMenu = !isActiveMenu;
 		GameMenu.SetActive(isActiveMenu);
 		SetPause(isActiveMenu);
+
 	}
 
 	void SetPause(bool enable)

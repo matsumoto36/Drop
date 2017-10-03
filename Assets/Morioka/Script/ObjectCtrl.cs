@@ -21,7 +21,7 @@ public class ObjectCtrl : FloorMove
         //配列にインスタンスを付与
         for (int i = 0; i < objects.Length; i++)
         {
-            objects[i] = (GameObject)Resources.Load("Prefabs/Object" + i);
+            objects[i] = (GameObject)Resources.Load("Prefabs/Objects/Object" + i);
             choose.Add(i);
         }
         for (int i = 0; i < sceneObjects.Length; i++)

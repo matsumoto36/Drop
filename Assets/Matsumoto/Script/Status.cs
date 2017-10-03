@@ -15,7 +15,7 @@ public enum PlayerStatus {
 /// <summary>
 /// ステータス効果の親クラス。
 /// </summary>
-public abstract class Status : MonoBehaviour {
+public abstract class Status {
 
 	/// <summary>
 	/// 効果開始時の処理
