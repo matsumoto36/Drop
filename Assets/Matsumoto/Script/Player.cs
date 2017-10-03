@@ -54,6 +54,8 @@ public class Player : MonoBehaviour {
 
 	public bool isFreeze = true;
 
+	public ParticleSystem deathEffect;
+
 	//動き
 	CameraControl cameraControl;
 	Coroutine changeSizeRoutine;
@@ -181,12 +183,16 @@ public class Player : MonoBehaviour {
 
 	public void Death() {
 
+		if(isDeath) return;
 		Debug.Log("Player Death");
 
 		HP = 0;
 
 		//死亡時のアニメーション開始
 		StartCoroutine(PlayerDeathAnim());
+
+		//ゲームオーバー　
+		FindObjectOfType<GameManager>().GameOver();
 	}
 
 	void Move() {
@@ -225,7 +231,7 @@ public class Player : MonoBehaviour {
 		}
 
 		transform.position = pos;
-
+		
 		if(!isDeath) {
 
 			//向きの変更
@@ -333,6 +339,10 @@ public class Player : MonoBehaviour {
 		}
 
 		isFreeze = true;
+
+		//蒸発
+		var g = Instantiate(deathEffect, transform.position, Quaternion.identity);
+		Destroy(g.gameObject, 2.0f);
 
 		//ゲームオーバー
 	}
