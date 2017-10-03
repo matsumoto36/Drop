@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour {
 			return gyro;
 
 		}
-		else {
+		else if(Application.isMobilePlatform) {
 
 			return new Vector3(
 				Input.acceleration.x,
@@ -19,5 +19,7 @@ public class InputManager : MonoBehaviour {
 				0
 				);
 		}
+
+		return new Vector3();
 	}
 }
