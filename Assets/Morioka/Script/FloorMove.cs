@@ -9,7 +9,7 @@ public class FloorMove : MonoBehaviour
     public static Transform player;
     public static float LoadPos;
     int a,b,c,d;
-    public static float GoalPos = -200;
+    public static float GoalPos = -300;
 
 	// Use this for initialization
 	void Start ()
