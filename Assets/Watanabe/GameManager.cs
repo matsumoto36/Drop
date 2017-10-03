@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     public float playerpos;
     public float stagelength;
     public Slider stageprogress;
-    //↓追加
+
     float _hp = 0;
 
     float time;//時間を記録する小数も入る変数
@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private Image _imageMask;
 
+    //追加
+    public Text Score_Text;            // uGUI/Text
+
     bool isPlayGame = false;
 
     void Start()
@@ -39,9 +42,12 @@ public class GameManager : MonoBehaviour {
         text = GetComponent<Text>();
 
         stagelength = FloorMove.GoalPos;
+
+        GameClear();//デバッグ用に配置
+
     }
     void Update () {
-
+        
         if (!isPlayGame) return;
 
         //ここに時間の制御
@@ -65,7 +71,9 @@ public class GameManager : MonoBehaviour {
         //    _hp = stageprogress.minValue;
         //}
         // HPゲージに値を設定
-        stageprogress.value = FloorMove.player.position.y / stagelength;
+         stageprogress.value = FloorMove.player.position.y / stagelength;
+
+
     }
     /// <summary>
     /// ゲームを開始するときに
@@ -84,10 +92,10 @@ public class GameManager : MonoBehaviour {
 
         //スコアの計算
         int score = CalcScore();
-
+        StartCoroutine("ScoreCount", 10.0f);//早さ
         //リザルトを表示
 
-	}
+    }
 
 	/// <summary>
 	/// ゲームオーバーになったとき実行される
@@ -98,7 +106,6 @@ public class GameManager : MonoBehaviour {
         timetext.text = time.ToString("00.00");
 
         isPlayGame = false;
-
 	}
 
 	/// <summary>
@@ -113,6 +120,7 @@ public class GameManager : MonoBehaviour {
         k=(x*h)+(y*h)*2;
 
         return k;
+        
 	}
 
 	/// <summary>
@@ -142,6 +150,24 @@ public class GameManager : MonoBehaviour {
 
 		//ひとまずタイムアタック
 		FindObjectOfType<SceanManegement>().TimeAttack();
+    }
+    /// <summary>
+    /// スコアをどぅるどぅるする
+    /// </summary>
+    /// <param name="second">どのくらいの時間で完了するのか</param>
+    /// <returns></returns>
+    public IEnumerator ScoreCount(float second)
+    {
+        float t = 0;//経過時間
 
+        while (t <  1.0f )
+        {
+            t += Time.deltaTime / second;//経過時間の計算
+            float startScore = 0;//スタートの値：最小値
+            float endScore = CalcScore();//スコアを最大に代入
+            float Score = Mathf.Lerp(startScore, endScore, t);//どぅるどぅるする
+            Score_Text.text = string.Format("{0}", (int)(Score));//テキストとして表示
+            yield return null;
+        }
     }
 }
