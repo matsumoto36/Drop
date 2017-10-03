@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WormDummy : MonoBehaviour {
+public class ItemDummy : MonoBehaviour {
+    //アイテムのプレファブ
+    public GameObject ItemDrop;
 
-    //虫のプレファブ
-    public GameObject EnemyWorm;
-    
 
 
     void Awake()
     {
         //プレファブを同ポジションに生成
         GameObject go = (GameObject)Instantiate(
-            EnemyWorm,
+            ItemDrop,
             Vector3.zero,
             Quaternion.identity
             );
@@ -34,9 +33,9 @@ public class WormDummy : MonoBehaviour {
 
         Gizmos.DrawSphere(this.transform.position, transform.localScale.x);
 
-        //虫のプレファブのアイコンを表示
-        if (EnemyWorm != null)
-            Gizmos.DrawIcon(transform.position, EnemyWorm.name, true);
+        //アイテムのプレファブのアイコンを表示
+        if (ItemDrop != null)
+            Gizmos.DrawIcon(transform.position, ItemDrop.name, true);
 
     }
 }
