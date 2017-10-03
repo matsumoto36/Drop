@@ -856,7 +856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &999326080
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1046,7 +1046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1222054307
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2019,7 +2019,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1653902073
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2417,7 +2417,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackSpeed: 0.2
   isFreeze: 0
-  _StageCount: 30
 --- !u!81 &1889972087
 AudioListener:
   m_ObjectHideFlags: 0
