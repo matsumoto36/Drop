@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectCtrl : FloorMove
 {
     //プレファブとシーン上のオブジェクトの配列
-    GameObject[] objects = new GameObject[10];
+    GameObject[] objects = new GameObject[25];
     GameObject[] sceneObjects = new GameObject[3];
 
     //乱数選出時同じものが出ないようにするための変数
