@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 17e6f38bd1ccd5a4484b70aac7c20c2b
+timeCreated: 1506991231
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Nagurigaki Crayon
+  fontNames:
+  - Nagurigaki Crayon
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

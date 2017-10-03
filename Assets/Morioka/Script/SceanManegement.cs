@@ -18,9 +18,9 @@ public class SceanManegement : MonoBehaviour
     private void Start()
     {
         //インスタンスを生成
-        InvStart = GameObject.Find("InvisibleStart");
-        SelectBt[0] = GameObject.Find("Time");
-        SelectBt[1] = GameObject.Find("Score");
+        InvStart = GameObject.Find("Invisible");
+        SelectBt[0] = GameObject.Find("TimeAttack");
+        SelectBt[1] = GameObject.Find("Endless");
         Sgene = GetComponent<StageGenerator>();
         main = FindObjectOfType<SimpleMove>();
         main.enabled = false;
