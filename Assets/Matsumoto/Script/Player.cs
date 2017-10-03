@@ -98,8 +98,6 @@ public class Player : MonoBehaviour {
 		var size = Mathf.Lerp(minSize, maxSize, (float)HP / maxHP);
 		transform.localScale = Vector3.one * size;
 
-		AudioManager.Play(BGMType.Title, 1.0f, true);
-
 		Initialize();
 	}
 

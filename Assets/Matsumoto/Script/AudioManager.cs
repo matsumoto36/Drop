@@ -8,6 +8,9 @@ using UnityEngine.Audio;
 /// 例 : Title -> Resources/Sounds/BGM/Title.mp3が読み込まれる
 /// </summary>
 public enum BGMType {
+	Game,
+	Menu,
+	Result,
 	Title,
 }
 
@@ -17,7 +20,31 @@ public enum BGMType {
 /// 例 : Button -> Resources/Sounds/SE/Button.mp3が読み込まれる
 /// </summary>
 public enum SEType {
+
+	//アイテム
+	Poison,
+	Heal,
+	Jump,
+
+	//ゲームフロー
+	Start,
+	Countdown,
+	Pause_Game_Back,
+	Game_Over,
+	Clear_Goal,
+
+	//ボタン
+	Menu_Back_Button,
 	Button,
+
+	//ギミック
+	Hole_in_Drop,
+	Worm,
+
+	//死亡
+	Bomb_Big,
+	Bomb_Small,
+	Drop_Out,
 }
 
 /// <summary>
@@ -91,7 +118,7 @@ public class AudioManager : MonoBehaviour {
 		src.outputAudioMixerGroup = mixerGroups[0];
 		src.Play();
 
-		if(!autoDelete)
+		if(autoDelete)
 			Destroy(src.gameObject, SEclips[(int)type].length + 0.1f);
 
 		return src;

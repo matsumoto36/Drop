@@ -12,7 +12,7 @@ public class ObjectCtrl : FloorMove
     List<int> choose = new List<int>();
 
     //instantiate時の座標指定変数
-    Vector3 instancePos = new Vector3(0, 40, 0);
+    Vector3 instancePos = new Vector3(0, 30, 0);
     int temp, i, j, l, f;
 
     // Use this for initialization
@@ -37,15 +37,14 @@ public class ObjectCtrl : FloorMove
 	void Update ()
     {
         //playerのpositionからオブジェクトを更新
-        if (player.position.y > LoadPos-1)
+        if (player.position.y <= LoadPos)
         {
             //乱数でプレファブから選択、選択したものは次回選択から除外
             int selectIndex = choose[Random.Range(0, choose.Count)];
             choose.Remove(selectIndex);
             Destroy(sceneObjects[i].gameObject);
-            Debug.Log(LoadPos);
             //消したオブジェクトの一つ上のものを基点としてインスタンス、配列に代入
-            sceneObjects[i] = Instantiate(objects[selectIndex], sceneObjects[j].transform.position+instancePos, Quaternion.identity) as GameObject;
+            sceneObjects[i] = Instantiate(objects[selectIndex], sceneObjects[j].transform.position-instancePos, Quaternion.identity) as GameObject;
             choose.Add(temp);
             temp = selectIndex;
             i = j;j = l;l = f;f = i;
