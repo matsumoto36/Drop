@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4696531870186584}
   - component: {fileID: 212864447658151438}
   m_Layer: 0
-  m_Name: kage_01
+  m_Name: BG=Shade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4049719374560484}
   - component: {fileID: 212174707708612842}
   m_Layer: 0
-  m_Name: haikei
+  m_Name: BG-Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 4307913587511504}
   - component: {fileID: 212694658934849378}
   m_Layer: 0
-  m_Name: moyou_03
+  m_Name: BG-Groove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 4420475444846500}
   - component: {fileID: 212936645648173274}
   m_Layer: 0
-  m_Name: hikari_01
+  m_Name: BG-Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1035575843273738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4049719374560484}
@@ -192,7 +192,7 @@ SpriteRenderer:
   m_SortingLayerID: 1222021937
   m_SortingLayer: 1
   m_SortingOrder: -3
-  m_Sprite: {fileID: 21300000, guid: 61e49b8225e2c3f449760d1467e71232, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06f0f704cd3ff724f9ca47a37054f7fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
