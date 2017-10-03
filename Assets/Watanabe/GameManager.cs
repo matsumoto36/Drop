@@ -140,31 +140,8 @@ public class GameManager : MonoBehaviour {
         _textGameManager.gameObject.SetActive(false);
         _imageMask.gameObject.SetActive(false);
 
-        yield return null;
+		//ひとまずタイムアタック
+		FindObjectOfType<SceanManegement>().TimeAttack();
 
-        //if (m_isVisibleTimer)
-        //{
-        //    //毎フレームの時間を加算。
-        //    time += Time.deltaTime;
-        //    //分.timeを60で割った値.
-        //    int minute = (int)time / 60;
-        //    //秒.timeを60で割った余り.
-        //    int second = (int)time % 60;
-        //    //テキスト形式の分・秒を用意.
-        //    string minText, secText;
-
-        //    if (minute < 10)
-        //        //ToStringでint→Stringに変換.
-        //        minText = "0" + minute.ToString();
-        //    else
-        //        minText = minute.ToString();
-        //    if (second < 10)
-        //        //上に同じく
-        //        secText = "0" + second.ToString();
-        //    else
-        //        secText = second.ToString();
-
-        //    text.text = "Time:" + minText + ":" + secText;
-        //}
     }
 }
