@@ -9,7 +9,6 @@ public class SceanManegement : MonoBehaviour
     GameObject InvStart;
     //ゲームスクリプトのインスタンス
     StageGenerator Sgene;
-    SimpleMove main;
 
     int id;
 
@@ -17,13 +16,7 @@ public class SceanManegement : MonoBehaviour
     {
         //インスタンスを生成
         InvStart = GameObject.Find("Invisible");
-
         Sgene = GetComponent<StageGenerator>();
-        main.enabled = false;
-
-        ////selectを非表示
-        //SelectBt[0].SetActive(false);
-        //SelectBt[1].SetActive(false);
     }
 
 
@@ -43,7 +36,6 @@ public class SceanManegement : MonoBehaviour
     {
         id = 1;
         //Sgene.Generat(id);
-        main.enabled = true;
 
     }
 
@@ -54,6 +46,5 @@ public class SceanManegement : MonoBehaviour
     {
         id = -1;
         //Sgene.Generat(id);
-        main.enabled = true;
     }
 }
