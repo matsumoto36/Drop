@@ -15,7 +15,7 @@ public class CameraControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = FindObjectOfType<Player>();
-		stageCount = (int)Mathf.Abs(FloorMove.GoalPos / STAGE_HEIGHT + 1);
+		stageCount = (int)Mathf.Abs(FloorMove.GoalPos / STAGE_HEIGHT) + 1;
 	}
 	
 	// Update is called once per frame
