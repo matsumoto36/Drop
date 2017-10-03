@@ -10,12 +10,12 @@ public class CameraControl : MonoBehaviour {
 	public float trackSpeed;
 	public bool isFreeze;
 
-	//Debug
-	public int _StageCount;
+	int stageCount;
 
 	// Use this for initialization
 	void Start () {
 		player = FindObjectOfType<Player>();
+		stageCount = (int)Mathf.Abs(FloorMove.GoalPos / STAGE_HEIGHT + 1);
 	}
 	
 	// Update is called once per frame
@@ -30,8 +30,8 @@ public class CameraControl : MonoBehaviour {
 		if(player.transform.position.y > pos.y) return;
 
 		//ステージの下限まで移動した場合はスクロールしない
-		if((_StageCount - 1) * STAGE_HEIGHT <= Mathf.Abs(pos.y)) {
-			pos.y = -(_StageCount - 1) * STAGE_HEIGHT;
+		if((stageCount - 1) * STAGE_HEIGHT <= Mathf.Abs(pos.y)) {
+			pos.y = -(stageCount - 1) * STAGE_HEIGHT;
 			transform.position = pos;
 			return;
 		}

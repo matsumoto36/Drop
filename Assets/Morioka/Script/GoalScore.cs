@@ -2,10 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoalScore : MonoBehaviour
+public class GoalScore : FloorMove
 {
-    private void OnTriggerEnter(Collider other)
+
+    int flg;
+    float mag;
+    GameManager gmManage;
+
+    private void Start()
     {
-            Debug.Log("ゴォォォォォォォォォルッッ！！");
+        flg = 0;
+        gmManage = FindObjectOfType<GameManager>();
+    }
+
+    private void Update()
+    {
+        if (player.position.y < GoalPos && flg == 0)   
+        {
+            //gmManage.GameClear();
+            Debug.Log("ゴール！");
+            flg++;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        mag = 1.5f;
+        Debug.Log("フラグ");
     }
 }

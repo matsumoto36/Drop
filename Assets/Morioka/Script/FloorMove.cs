@@ -28,7 +28,7 @@ public class FloorMove : MonoBehaviour
     {
         if (player.position.y <= LoadPos)
         {
-            floor[a].transform.position -= Vector3.up * 45;
+            floor[a].transform.position += Vector3.down * 45;
             LoadPos -= 15;
             a = b;b = c;c = d;d = a;
         }

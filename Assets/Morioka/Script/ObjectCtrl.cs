@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectCtrl : FloorMove
 {
     //プレファブとシーン上のオブジェクトの配列
-    GameObject[] objects = new GameObject[10];
+    GameObject[] objects = new GameObject[25];
     GameObject[] sceneObjects = new GameObject[3];
 
     //乱数選出時同じものが出ないようにするための変数
@@ -21,7 +21,7 @@ public class ObjectCtrl : FloorMove
         //配列にインスタンスを付与
         for (int i = 0; i < objects.Length; i++)
         {
-            objects[i] = (GameObject)Resources.Load("Prefabs/Object" + i);
+            objects[i] = (GameObject)Resources.Load("Prefabs/Objects/Object" + i);
             choose.Add(i);
         }
         for (int i = 0; i < sceneObjects.Length; i++)
