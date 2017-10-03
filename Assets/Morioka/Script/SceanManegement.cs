@@ -7,8 +7,6 @@ public class SceanManegement : MonoBehaviour
 {
     //InvisibleStatのインスタンス
     GameObject InvStart;
-    //ステージセレクトボタンのインスタンス
-    GameObject[] SelectBt = new GameObject[2];
     //ゲームスクリプトのインスタンス
     StageGenerator Sgene;
     SimpleMove main;
@@ -19,15 +17,13 @@ public class SceanManegement : MonoBehaviour
     {
         //インスタンスを生成
         InvStart = GameObject.Find("Invisible");
-        SelectBt[0] = GameObject.Find("TimeAttack");
-        SelectBt[1] = GameObject.Find("Endless");
+
         Sgene = GetComponent<StageGenerator>();
-        main = FindObjectOfType<SimpleMove>();
         main.enabled = false;
 
-        //selectを非表示
-        SelectBt[0].SetActive(false);
-        SelectBt[1].SetActive(false);
+        ////selectを非表示
+        //SelectBt[0].SetActive(false);
+        //SelectBt[1].SetActive(false);
     }
 
 
@@ -38,10 +34,6 @@ public class SceanManegement : MonoBehaviour
     {
         //InvisibleStartを非アクティブ
         InvStart.SetActive(false);
-
-        //selectを表示
-        SelectBt[0].SetActive(true);
-        SelectBt[1].SetActive(true);
     }
 
     /// <summary>
@@ -52,8 +44,7 @@ public class SceanManegement : MonoBehaviour
         id = 1;
         //Sgene.Generat(id);
         main.enabled = true;
-        SelectBt[0].SetActive(false);
-        SelectBt[1].SetActive(false);
+
     }
 
     /// <summary>
@@ -64,7 +55,5 @@ public class SceanManegement : MonoBehaviour
         id = -1;
         //Sgene.Generat(id);
         main.enabled = true;
-        SelectBt[0].SetActive(false);
-        SelectBt[1].SetActive(false);
     }
 }
