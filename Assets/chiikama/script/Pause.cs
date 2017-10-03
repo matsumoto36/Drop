@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Pause : MonoBehaviour {
+public class Pause : MonoBehaviour
+{
+
+	public static bool isPause;
+	static List<Pause> targets = new List<Pause>();
 	Behaviour[] pauseBehavs = null;
 	// Use this for initialization
-	void Start () {
-		
+	public static void ClearPauseList()
+	{
+		targets.Clear();
 	}
+	void Start()
+	{
+		Debug.Log("name:" + name);
+		targets.Add(this);
+	}
+
 	void OnPause()
 	{
 		if (pauseBehavs != null)
@@ -37,9 +48,27 @@ public class Pause : MonoBehaviour {
 
 		pauseBehavs = null;
 	}
-
+	//ポーズ
+	public static void Pauser()
+	{
+		isPause = true;
+		foreach (var obj in targets)
+		{
+			obj.OnPause();
+		}
+	}
+	//ポーズ解除
+	public static void Resume()
+	{
+		isPause = false;
+		foreach (var obj in targets)
+		{
+			obj.OnResume();
+		}
+	}
 	// Update is called once per frame
-	void Update () {
-		
+	void Update()
+	{
+
 	}
 }

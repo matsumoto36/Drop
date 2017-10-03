@@ -233,7 +233,7 @@ public class Player : MonoBehaviour {
 				Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x) - 90, Vector3.forward);
 
 			transform.rotation =
-				Quaternion.Lerp(transform.rotation, rot, 0.3f);
+				Quaternion.Lerp(transform.rotation, rot, 0.2f);
 		}
 
 		//カメラの移動

@@ -43,7 +43,6 @@ public class ObjectCtrl : FloorMove
             int selectIndex = choose[Random.Range(0, choose.Count)];
             choose.Remove(selectIndex);
             Destroy(sceneObjects[i].gameObject);
-            Debug.Log(LoadPos);
             //消したオブジェクトの一つ上のものを基点としてインスタンス、配列に代入
             sceneObjects[i] = Instantiate(objects[selectIndex], sceneObjects[j].transform.position-instancePos, Quaternion.identity) as GameObject;
             choose.Add(temp);

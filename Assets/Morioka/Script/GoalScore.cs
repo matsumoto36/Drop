@@ -6,9 +6,6 @@ public class GoalScore : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Player")
-        {
-            
-        }
+            Debug.Log("ゴォォォォォォォォォルッッ！！");
     }
 }

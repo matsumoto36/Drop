@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour {
         time = limitTime;
         //自分のインスペクター内からTextコンポーネントを取得。
         text = GetComponent<Text>();
+
+        stagelength = FloorMove.GoalPos;
     }
     void Update () {
 
@@ -63,17 +65,12 @@ public class GameManager : MonoBehaviour {
         //    _hp = stageprogress.minValue;
         //}
         // HPゲージに値を設定
-        stageprogress.value = playerpos / stagelength;
-
-        
+        stageprogress.value = FloorMove.player.position.y / stagelength;
     }
     /// <summary>
     /// ゲームを開始するときに
     /// ボタンで押すと実行される
     /// </summary>
-    /*public void GameStart() {
-        StartCoroutine(CountDownGameManager());
-    }*/
 
     public void OnClickButtonStart()//ボタン
     {
@@ -89,6 +86,7 @@ public class GameManager : MonoBehaviour {
         int score = CalcScore();
 
         //リザルトを表示
+
 	}
 
 	/// <summary>
@@ -134,7 +132,7 @@ public class GameManager : MonoBehaviour {
         _textGameManager.text = "1";
         yield return new WaitForSeconds(1.0f);
 
-        _textGameManager.text = "GO!";
+        _textGameManager.text = "スタート！";
         yield return new WaitForSeconds(1.0f);
 
         isPlayGame = true;
@@ -142,31 +140,8 @@ public class GameManager : MonoBehaviour {
         _textGameManager.gameObject.SetActive(false);
         _imageMask.gameObject.SetActive(false);
 
-        yield return null;
+		//ひとまずタイムアタック
+		FindObjectOfType<SceanManegement>().TimeAttack();
 
-        //if (m_isVisibleTimer)
-        //{
-        //    //毎フレームの時間を加算。
-        //    time += Time.deltaTime;
-        //    //分.timeを60で割った値.
-        //    int minute = (int)time / 60;
-        //    //秒.timeを60で割った余り.
-        //    int second = (int)time % 60;
-        //    //テキスト形式の分・秒を用意.
-        //    string minText, secText;
-
-        //    if (minute < 10)
-        //        //ToStringでint→Stringに変換.
-        //        minText = "0" + minute.ToString();
-        //    else
-        //        minText = minute.ToString();
-        //    if (second < 10)
-        //        //上に同じく
-        //        secText = "0" + second.ToString();
-        //    else
-        //        secText = second.ToString();
-
-        //    text.text = "Time:" + minText + ":" + secText;
-        //}
     }
 }
