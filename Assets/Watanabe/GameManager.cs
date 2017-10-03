@@ -64,16 +64,11 @@ public class GameManager : MonoBehaviour {
         //}
         // HPゲージに値を設定
         stageprogress.value = playerpos / stagelength;
-
-        
     }
     /// <summary>
     /// ゲームを開始するときに
     /// ボタンで押すと実行される
     /// </summary>
-    /*public void GameStart() {
-        StartCoroutine(CountDownGameManager());
-    }*/
 
     public void OnClickButtonStart()//ボタン
     {
@@ -89,6 +84,7 @@ public class GameManager : MonoBehaviour {
         int score = CalcScore();
 
         //リザルトを表示
+
 	}
 
 	/// <summary>
@@ -134,7 +130,7 @@ public class GameManager : MonoBehaviour {
         _textGameManager.text = "1";
         yield return new WaitForSeconds(1.0f);
 
-        _textGameManager.text = "GO!";
+        _textGameManager.text = "スタート！";
         yield return new WaitForSeconds(1.0f);
 
         isPlayGame = true;
