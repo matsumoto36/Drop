@@ -102,6 +102,8 @@ MonoBehaviour:
   HPStateTable: 320000001400000000000000
   deathRotSpeed: 25
   isFreeze: 1
+  deathEffect: {fileID: 198068913474304714, guid: 9e9c6ec3c46be5f4d940a9cadaded981,
+    type: 2}
 --- !u!212 &212648842949934158
 SpriteRenderer:
   m_ObjectHideFlags: 1
