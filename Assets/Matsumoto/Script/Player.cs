@@ -72,7 +72,6 @@ public class Player : MonoBehaviour {
 	//フラグ
 	bool isDeath;
 
-
 	public int HP {
 		get; private set;
 	}
