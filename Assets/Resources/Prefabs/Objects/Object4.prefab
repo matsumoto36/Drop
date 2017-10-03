@@ -57,7 +57,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1628917267616606
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1628917267616606}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalPosition: {x: 0, y: 4.5, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4940309929166880}
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43e909e0e5ff1f742b2b3c98426cd0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemDrop: {fileID: 1431481296261932, guid: 263b2073be812074db073bec1bd6b8c6, type: 2}
+  ItemDrop: {fileID: 1431481296261932, guid: 318c28ccd928e0c4dab478dc00745c4d, type: 2}
 --- !u!114 &114176832692219862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43e909e0e5ff1f742b2b3c98426cd0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemDrop: {fileID: 1431481296261932, guid: 263b2073be812074db073bec1bd6b8c6, type: 2}
+  ItemDrop: {fileID: 1431481296261932, guid: 318c28ccd928e0c4dab478dc00745c4d, type: 2}
 --- !u!114 &114944973176733006
 MonoBehaviour:
   m_ObjectHideFlags: 1
