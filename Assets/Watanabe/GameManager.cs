@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour {
         time = limitTime;
         //自分のインスペクター内からTextコンポーネントを取得。
         text = GetComponent<Text>();
+
+        stagelength = FloorMove.GoalPos;
     }
     void Update () {
 
@@ -63,7 +65,7 @@ public class GameManager : MonoBehaviour {
         //    _hp = stageprogress.minValue;
         //}
         // HPゲージに値を設定
-        stageprogress.value = playerpos / stagelength;
+        stageprogress.value = FloorMove.player.position.y / stagelength;
     }
     /// <summary>
     /// ゲームを開始するときに
