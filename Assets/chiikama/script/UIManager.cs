@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
 
 	public void RetryButton()
 	{
-		SceneFader.MoveToScene("test", SceneMoveType.Short);
+		SceneFader.MoveToScene("Game", SceneMoveType.Short);
 	}
 	public void BackButton()
 	{

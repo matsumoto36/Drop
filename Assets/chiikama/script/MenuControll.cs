@@ -6,12 +6,7 @@ public class MenuControll : MonoBehaviour {
 
 	public void ToMainMode()
 	{
-		SceneFader.MoveToScene("test",SceneMoveType.Long);
-	}
-
-	public void ToEndlessMode()
-	{
-		//SceneFader.MoveToScene("EndlessMode");
+		SceneFader.MoveToScene("Game",SceneMoveType.Long);
 	}
 
 	public void ToTitleScene()
