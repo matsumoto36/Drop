@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour {
 
     float time;//時間を記録する小数も入る変数
     Text text;
-    //private bool    m_isVisibleTimer    = false;
 
     public int limitBaseScore;
     public int lifeBaseScore;
@@ -32,23 +31,31 @@ public class GameManager : MonoBehaviour {
 
     //追加
     public Text Score_Text;            // uGUI/Text
+	public RectTransform resultPanel;
+	public Image rankImage;
+	public Sprite[] rankSprList;
 
+	Player player;
+	int score = 0;
     bool isPlayGame = false;
 
     void Start()
     {
-        time = limitTime;
+		player = FindObjectOfType<Player>();
+		time = limitTime;
         //自分のインスペクター内からTextコンポーネントを取得。
         text = GetComponent<Text>();
 
         stagelength = FloorMove.GoalPos;
 
-        GameClear();//デバッグ用に配置
-
     }
     void Update () {
         
         if (!isPlayGame) return;
+
+		//Debug
+		if(Input.GetKeyDown(KeyCode.B)) GameClear();
+
 
         //ここに時間の制御
         time -= Time.deltaTime;
@@ -63,14 +70,6 @@ public class GameManager : MonoBehaviour {
 
         _textGameManager.text = "";
 
-        ////HP上昇
-        //_hp += 1;
-        //if (_hp > stageprogress.maxValue)
-        //{
-        //    // 最大を超えたら0に戻す
-        //    _hp = stageprogress.minValue;
-        //}
-        // HPゲージに値を設定
          stageprogress.value = FloorMove.player.position.y / stagelength;
 
 
@@ -88,14 +87,21 @@ public class GameManager : MonoBehaviour {
     /// ゲームクリアしたときに実行される
     /// </summary>
     public void GameClear() {
-        Debug.Log("GameClear");
 
-        //スコアの計算
-        int score = CalcScore();
-        StartCoroutine("ScoreCount", 10.0f);//早さ
-        //リザルトを表示
+		Debug.Log("GameClear");
 
-    }
+		isPlayGame = false;
+		player.canInput = false;
+
+		//スコアの計算
+		score = CalcScore();
+
+		//リザルトを表示
+		resultPanel.gameObject.SetActive(true);
+
+		//アニメーションを再生
+		StartCoroutine(ResultAnim());
+	}
 
 	/// <summary>
 	/// ゲームオーバーになったとき実行される
@@ -115,7 +121,7 @@ public class GameManager : MonoBehaviour {
 	int CalcScore() {
         int x = limitBaseScore;
         int y = lifeBaseScore;
-        int k;
+		int k;
         int h = tensuu;
         k=(x*h)+(y*h)*2;
 
@@ -148,26 +154,56 @@ public class GameManager : MonoBehaviour {
         _textGameManager.gameObject.SetActive(false);
         _imageMask.gameObject.SetActive(false);
 
+		player.Initialize();
+
 		//ひとまずタイムアタック
 		FindObjectOfType<SceanManegement>().TimeAttack();
     }
-    /// <summary>
-    /// スコアをどぅるどぅるする
-    /// </summary>
-    /// <param name="second">どのくらいの時間で完了するのか</param>
-    /// <returns></returns>
-    public IEnumerator ScoreCount(float second)
+
+	IEnumerator ResultAnim() {
+
+		//スコアをアニメーション
+		yield return StartCoroutine("ScoreCount", 5f);//早さ
+
+		//順位発表
+		RankingManager.LoadRanking();
+		RankingManager.SetRankData(score);
+		var rank = RankingManager.GetRank(score);
+		if(rank < 3) {
+			rankImage.enabled = true;
+			rankImage.sprite = rankSprList[rank];
+		}
+
+		//待機ループ
+		while(true) {
+			if(Input.GetMouseButtonDown(0)) break;
+			yield return null;
+		}
+
+		//シーン移動
+		//SceneFader.MoveToScene("", SceneMoveType.Long);
+	}
+
+	/// <summary>
+	/// スコアをどぅるどぅるする
+	/// </summary>
+	/// <param name="second">どのくらいの時間で完了するのか</param>
+	/// <returns></returns>
+	public IEnumerator ScoreCount(float second)
     {
         float t = 0;//経過時間
 
         while (t <  1.0f )
         {
+			if(Input.GetMouseButtonDown(0)) break;
+
             t += Time.deltaTime / second;//経過時間の計算
             float startScore = 0;//スタートの値：最小値
-            float endScore = CalcScore();//スコアを最大に代入
-            float Score = Mathf.Lerp(startScore, endScore, t);//どぅるどぅるする
+            float Score = Mathf.Lerp(startScore, score, t);//どぅるどぅるする
             Score_Text.text = string.Format("{0}", (int)(Score));//テキストとして表示
             yield return null;
         }
-    }
+
+		Score_Text.text = string.Format("{0}", score);
+	}
 }
