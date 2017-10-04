@@ -18,7 +18,8 @@ public class hole : MonoBehaviour {
 	{
 		if(col.gameObject.tag == "Player")
 		{
-			player.Death(DeathType.Hole);
+			if(!player.IsConfStatus(PlayerStatus.Fly))
+				player.Death(DeathType.Hole);
 		}
 	}
 }

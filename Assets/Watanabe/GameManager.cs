@@ -75,15 +75,7 @@ public class GameManager : MonoBehaviour {
 
 
     }
-    /// <summary>
-    /// ゲームを開始するときに
-    /// ボタンで押すと実行される
-    /// </summary>
 
-    public void OnClickButtonStart()//ボタン
-    {
-        StartCoroutine(CountDownGameManager());
-    }
     /// <summary>
     /// ゲームクリアしたときに実行される
     /// </summary>
@@ -120,14 +112,16 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	int CalcScore() {
-        int x = limitBaseScore;
-        int y = lifeBaseScore;
-		int k;
-        int h = tensuu;
-        k=(x*h)+(y*h)*2;
 
-        return k;
-        
+		//計算式
+		//内部で予め制限時間を設けてゴールした時間を差し引いた数値×点数)
+		// + 残りライフ×点数
+		// * ゴール位置による倍率加算
+
+		var timeScore = time * limitBaseScore;
+		var lifeScore = player.HP * lifeBaseScore;
+
+		return (int)((timeScore + lifeScore) * FindObjectOfType<GoalScore>().mag);
 	}
 
 	/// <summary>
@@ -135,7 +129,6 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator CountDownGameManager() {
-
         _textGameManager.gameObject.SetActive(true);
 
         _textGameManager.text = "3";

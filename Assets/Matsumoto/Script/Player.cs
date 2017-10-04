@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
 	[Header("Player Base Settings")]
 	[Header("HP")]
 	public int maxHP;
+	public int startHP;
 
 	[Header("摩擦")]
 	public float maxFriction;
@@ -103,13 +104,15 @@ public class Player : MonoBehaviour {
 		statusEffect[2] = new StatusFly();
 
 		//サイズを整える
-		HP = maxHP;
+		HP = startHP;
 		var size = Mathf.Lerp(minSize, maxSize, (float)HP / maxHP);
 		transform.localScale = Vector3.one * size;
 
 		//回転
 		transform.rotation =
 			Quaternion.AngleAxis(Mathf.Rad2Deg * Mathf.Atan2(-1, 0) - 90, Vector3.forward);
+
+		dropMarkPosLast = transform.position;
 
 	}
 
@@ -178,8 +181,10 @@ public class Player : MonoBehaviour {
 
 		HP -= pow;
 
+		HP = Mathf.Clamp(HP, 0, maxHP);
+
 		//0以下なら死亡
-		if(HP <= 0) {
+		if(HP == 0) {
 			Death(DeathType.Other);
 			return;
 		}
@@ -196,8 +201,6 @@ public class Player : MonoBehaviour {
 		if(isDeath) return;
 		Debug.Log("Player Death");
 
-		HP = 0;
-
 		//死亡時のアニメーション開始
 		StartCoroutine(PlayerDeathAnim(type));
 
@@ -211,8 +214,8 @@ public class Player : MonoBehaviour {
 
 		//スピードの決定
 		var t = (float)HP / maxHP;
-		var accelPow = Mathf.Lerp(minAccelPow, maxAccelPow, 1 - t);
-		var friction = Mathf.Lerp(minFriction, maxFriction, t);
+		var accelPow = Mathf.Lerp(minAccelPow, maxAccelPow, t);
+		var friction = Mathf.Lerp(minFriction, maxFriction,1 - t);
 		var dir = InputManager.GetAccSensor();
 
 		//移動
