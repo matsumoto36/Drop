@@ -9,11 +9,12 @@ public class BGMvolume : MonoBehaviour
 	[SerializeField]
 	UnityEngine.Audio.AudioMixer mixer;
 
+
 	void Start()
 	{
-		float bgmVolume;
-		mixer.GetFloat("BGM", out bgmVolume);
-		GetComponent<Slider>().value = bgmVolume;
+		float Volume;
+		mixer.GetFloat("BGMvolume", out Volume);
+		GetComponent<Slider>().value = Volume;
 
 	}
 
@@ -30,7 +31,5 @@ public class BGMvolume : MonoBehaviour
 	void Update()
 	{
 	}
+
 }
-
-
-		

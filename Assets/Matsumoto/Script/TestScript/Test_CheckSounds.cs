@@ -8,7 +8,7 @@ public class Test_CheckSounds : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		AudioManager.Play(BGMType.Title);
 	}
 	
 	// Update is called once per frame
