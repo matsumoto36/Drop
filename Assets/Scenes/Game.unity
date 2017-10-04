@@ -247,16 +247,6 @@ Prefab:
       propertyPath: m_Name
       value: Floor0
       objectReference: {fileID: 0}
-    - target: {fileID: 212757477209604580, guid: 6206061a05b8662439de732b23a514ff,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 212694658934849378, guid: 6206061a05b8662439de732b23a514ff,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6206061a05b8662439de732b23a514ff, type: 2}
   m_IsPrefabParent: 0
@@ -2329,6 +2319,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 58221272741529348, guid: d591beb13332b094683e0bc770f86ca3,
+        type: 2}
+      propertyPath: m_Radius
+      value: 0.24
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d591beb13332b094683e0bc770f86ca3, type: 2}
   m_IsPrefabParent: 0
@@ -2655,11 +2650,6 @@ Prefab:
     - target: {fileID: 1035575843273738, guid: 6206061a05b8662439de732b23a514ff, type: 2}
       propertyPath: m_Name
       value: Floor2
-      objectReference: {fileID: 0}
-    - target: {fileID: 212757477209604580, guid: 6206061a05b8662439de732b23a514ff,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6206061a05b8662439de732b23a514ff, type: 2}

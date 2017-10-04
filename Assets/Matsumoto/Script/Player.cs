@@ -12,6 +12,11 @@ public enum PlayerHPState {
 	Low,
 }
 
+public enum DeathType {
+	Hole,
+	Other,
+}
+
 /// <summary>
 /// 雫を操作するクラス
 /// </summary>
@@ -169,7 +174,7 @@ public class Player : MonoBehaviour {
 
 		//0以下なら死亡
 		if(HP <= 0) {
-			Death();
+			Death(DeathType.Other);
 			return;
 		}
 
@@ -180,7 +185,7 @@ public class Player : MonoBehaviour {
 		UpdateSize();
 	}
 
-	public void Death() {
+	public void Death(DeathType type) {
 
 		if(isDeath) return;
 		Debug.Log("Player Death");
@@ -188,7 +193,7 @@ public class Player : MonoBehaviour {
 		HP = 0;
 
 		//死亡時のアニメーション開始
-		StartCoroutine(PlayerDeathAnim());
+		StartCoroutine(PlayerDeathAnim(type));
 
 		//ゲームオーバー　
 		FindObjectOfType<GameManager>().GameOver();
@@ -320,10 +325,14 @@ public class Player : MonoBehaviour {
 		statusEffect[statusID].EndEffect(this);
 	}
 
-	IEnumerator PlayerDeathAnim() {
+	IEnumerator PlayerDeathAnim(DeathType type) {
 
 		isDeath = true;
 		GetComponent<Collider2D>().enabled = false;
+
+		if(type == DeathType.Hole) {
+			isFreeze = true;
+		}
 
 		//サイズを小さくする
 		if(changeSizeRoutine != null) StopCoroutine(changeSizeRoutine);
@@ -340,10 +349,10 @@ public class Player : MonoBehaviour {
 		isFreeze = true;
 
 		//蒸発
-		var g = Instantiate(deathEffect, transform.position, Quaternion.identity);
-		Destroy(g.gameObject, 2.0f);
-
-		//ゲームオーバー
+		if(type != DeathType.Hole) {
+			var g = Instantiate(deathEffect, transform.position, Quaternion.identity);
+			Destroy(g.gameObject, 2.0f);
+		}
 	}
 
 	public void _SetPoison() {

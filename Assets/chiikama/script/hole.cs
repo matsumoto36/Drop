@@ -18,7 +18,7 @@ public class hole : MonoBehaviour {
 	{
 		if(col.gameObject.tag == "Player")
 		{
-			player.Death();
+			player.Death(DeathType.Hole);
 		}
 	}
 }
