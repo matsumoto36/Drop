@@ -6,12 +6,13 @@ public class GoalScore : FloorMove
 {
 
     int flg;
-    float mag;
+    public float mag;
     GameManager gmManage;
 
     private void Start()
     {
         flg = 0;
+        mag = 1;
         gmManage = FindObjectOfType<GameManager>();
     }
 
@@ -19,7 +20,7 @@ public class GoalScore : FloorMove
     {
         if (player.position.y < GoalPos && flg == 0)   
         {
-            //gmManage.GameClear();
+            gmManage.GameClear();
             Debug.Log("ゴール！");
             flg++;
         }
