@@ -9,6 +9,7 @@ public class CameraControl : MonoBehaviour {
 	Player player;
 	public float trackSpeed;
 	public bool isFreeze;
+	public Vector3 offset;
 
 	int stageCount;
 
@@ -25,9 +26,10 @@ public class CameraControl : MonoBehaviour {
 
 		//YのみLerpする
 		var pos = transform.position;
+		var plPosY = (player.transform.position + offset).y;
 
 		//上に移動した場合はスクロールしない
-		if(player.transform.position.y > pos.y) return;
+		if(plPosY > pos.y) return;
 
 		//ステージの下限まで移動した場合はスクロールしない
 		if((stageCount - 1) * STAGE_HEIGHT <= Mathf.Abs(pos.y)) {
@@ -36,7 +38,7 @@ public class CameraControl : MonoBehaviour {
 			return;
 		}
 
-		pos.y = Mathf.Lerp(pos.y, player.transform.position.y, trackSpeed);
+		pos.y = Mathf.Lerp(pos.y, plPosY, trackSpeed);
 
 		transform.position = pos;
 	}

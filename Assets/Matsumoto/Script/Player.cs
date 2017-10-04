@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
 	const int PLAYER_MOVABLE_X = 4;
 	const int PLAYER_MOVABLE_Y = 7;
 
-	const float DROPMARK_SPAWN_DIST = .1f;
+	const float DROPMARK_SPAWN_DIST = 0.1f;
 	const float DROPMARK_SIZE_RATIO = 0.2f;
 
 	[Header("Player Base Settings")]
@@ -58,6 +58,8 @@ public class Player : MonoBehaviour {
 	public float deathRotSpeed;
 
 	public bool isFreeze = true;
+	public bool canCollisionWall = true;
+	public bool canInput = true;
 
 	public ParticleSystem deathEffect;
 
@@ -100,11 +102,15 @@ public class Player : MonoBehaviour {
 		statusEffect[1] = new StatusPoison();
 		statusEffect[2] = new StatusFly();
 
+		//サイズを整える
 		HP = maxHP;
 		var size = Mathf.Lerp(minSize, maxSize, (float)HP / maxHP);
 		transform.localScale = Vector3.one * size;
 
-		Initialize();
+		//回転
+		transform.rotation =
+			Quaternion.AngleAxis(Mathf.Rad2Deg * Mathf.Atan2(-1, 0) - 90, Vector3.forward);
+
 	}
 
 	// Update is called once per frame
@@ -123,7 +129,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	void Initialize() {
+	public void Initialize() {
 
 		isFreeze = false;
 		StartCoroutine(ContinuationDamage());
@@ -210,7 +216,7 @@ public class Player : MonoBehaviour {
 		var dir = InputManager.GetAccSensor();
 
 		//移動
-		accel += dir * accelPow;
+		if(canInput) accel += dir * accelPow;
 		accel -= accel * friction;
 
 		var moveVec = accel * speed;
@@ -220,23 +226,31 @@ public class Player : MonoBehaviour {
 
 		pos += moveVec * Time.deltaTime;
 
-		//X判定
-		if(Mathf.Abs(pos.x) > PLAYER_MOVABLE_X) {
-			pos.x = pos.x / Mathf.Abs(pos.x) * PLAYER_MOVABLE_X;
-			accel.x = 0;
-		}
+		if(canCollisionWall) {
 
-		//Y判定
-		var camPosY = cameraControl.transform.position.y;
-		var checkPosY = pos.y - camPosY;
-		if(Math.Abs(checkPosY) > PLAYER_MOVABLE_Y) {
-			pos.y = checkPosY / Mathf.Abs(checkPosY) * PLAYER_MOVABLE_Y + camPosY;
-			accel.y = 0;
+			//X判定
+			if(Mathf.Abs(pos.x) > PLAYER_MOVABLE_X) {
+				pos.x = pos.x / Mathf.Abs(pos.x) * PLAYER_MOVABLE_X;
+				accel.x = 0;
+			}
+
+			//Y判定
+			var camPosY = cameraControl.transform.position.y;
+			var checkPosY = pos.y - camPosY;
+			if(Math.Abs(checkPosY) > PLAYER_MOVABLE_Y) {
+				pos.y = checkPosY / Mathf.Abs(checkPosY) * PLAYER_MOVABLE_Y + camPosY;
+				accel.y = 0;
+			}
+
 		}
 
 		transform.position = pos;
 		
-		if(!isDeath) {
+		if(!isDeath && canInput) {
+
+			if(dir.x == 0 && dir.y == 0) {
+				dir.y = -1;
+			}
 
 			//向きの変更
 			var rot = Quaternion.AngleAxis(
