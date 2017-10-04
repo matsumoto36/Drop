@@ -48,7 +48,8 @@ public class GameManager : MonoBehaviour {
 
         stagelength = FloorMove.GoalPos;
 
-    }
+		StartCoroutine(CountDownGameManager());
+	}
     void Update () {
         
         if (!isPlayGame) return;
@@ -74,15 +75,7 @@ public class GameManager : MonoBehaviour {
 
 
     }
-    /// <summary>
-    /// ゲームを開始するときに
-    /// ボタンで押すと実行される
-    /// </summary>
 
-    public void OnClickButtonStart()//ボタン
-    {
-        StartCoroutine(CountDownGameManager());
-    }
     /// <summary>
     /// ゲームクリアしたときに実行される
     /// </summary>
@@ -136,7 +129,6 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator CountDownGameManager() {
-        _imageMask.gameObject.SetActive(true);
         _textGameManager.gameObject.SetActive(true);
 
         _textGameManager.text = "3";
@@ -154,7 +146,6 @@ public class GameManager : MonoBehaviour {
         isPlayGame = true;
         _textGameManager.text = "";
         _textGameManager.gameObject.SetActive(false);
-        _imageMask.gameObject.SetActive(false);
 
 		player.Initialize();
 
