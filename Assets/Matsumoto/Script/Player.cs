@@ -213,8 +213,8 @@ public class Player : MonoBehaviour {
 
 		//スピードの決定
 		var t = (float)HP / maxHP;
-		var accelPow = Mathf.Lerp(minAccelPow, maxAccelPow, 1 - t);
-		var friction = Mathf.Lerp(minFriction, maxFriction, t);
+		var accelPow = Mathf.Lerp(minAccelPow, maxAccelPow, t);
+		var friction = Mathf.Lerp(minFriction, maxFriction,1 - t);
 		var dir = InputManager.GetAccSensor();
 
 		//移動
