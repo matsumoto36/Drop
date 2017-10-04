@@ -111,6 +111,8 @@ public class Player : MonoBehaviour {
 		transform.rotation =
 			Quaternion.AngleAxis(Mathf.Rad2Deg * Mathf.Atan2(-1, 0) - 90, Vector3.forward);
 
+		dropMarkPosLast = transform.position;
+
 	}
 
 	// Update is called once per frame
