@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
 	[Header("Player Base Settings")]
 	[Header("HP")]
 	public int maxHP;
+	public int startHP;
 
 	[Header("摩擦")]
 	public float maxFriction;
@@ -103,7 +104,7 @@ public class Player : MonoBehaviour {
 		statusEffect[2] = new StatusFly();
 
 		//サイズを整える
-		HP = maxHP;
+		HP = startHP;
 		var size = Mathf.Lerp(minSize, maxSize, (float)HP / maxHP);
 		transform.localScale = Vector3.one * size;
 
@@ -180,8 +181,10 @@ public class Player : MonoBehaviour {
 
 		HP -= pow;
 
+		HP = Mathf.Clamp(HP, 0, maxHP);
+
 		//0以下なら死亡
-		if(HP <= 0) {
+		if(HP == 0) {
 			Death(DeathType.Other);
 			return;
 		}
@@ -197,8 +200,6 @@ public class Player : MonoBehaviour {
 
 		if(isDeath) return;
 		Debug.Log("Player Death");
-
-		HP = 0;
 
 		//死亡時のアニメーション開始
 		StartCoroutine(PlayerDeathAnim(type));
