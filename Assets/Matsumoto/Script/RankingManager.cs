@@ -53,8 +53,21 @@ public class RankingManager : MonoBehaviour {
 	/// </summary>
 	/// <param name="rank"></param>
 	/// <returns></returns>
-	public static int GetRankData(int rank) {
+	public static int GetScore(int rank) {
 		return myManager.rankingScore[rank];
+	}
+
+	/// <summary>
+	/// スコアの順位を取得する
+	/// </summary>
+	/// <param name="score"></param>
+	/// <returns></returns>
+	public static int GetRank(int score) {
+		for(int i = 0;i < SAVECOUNT;i++) {
+			if(myManager.rankingScore[i] <= score) return i;
+		}
+
+		return SAVECOUNT;
 	}
 
 	/// <summary>

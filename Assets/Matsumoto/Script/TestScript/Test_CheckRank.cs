@@ -11,9 +11,9 @@ public class Test_CheckRank : MonoBehaviour {
 		RankingManager.SetRankData(100);
 		RankingManager.SetRankData(5000);
 
-		Debug.Log(RankingManager.GetRankData(0));
-		Debug.Log(RankingManager.GetRankData(1));
-		Debug.Log(RankingManager.GetRankData(2));
+		Debug.Log(RankingManager.GetScore(0));
+		Debug.Log(RankingManager.GetScore(1));
+		Debug.Log(RankingManager.GetScore(2));
 	}
 	
 	// Update is called once per frame
