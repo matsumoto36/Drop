@@ -10,7 +10,7 @@ using UnityEngine.Audio;
 public enum BGMType {
 	Game,
 	Menu,
-	Result,
+	Result,//
 	Title,
 }
 
@@ -28,14 +28,14 @@ public enum SEType {
 
 	//ゲームフロー
 	Start,
-	Countdown,
-	Pause_Game_Back,
+	Countdown,//
+	Pause_Game_Back,//
 	Game_Over,
 	Clear_Goal,
 
 	//ボタン
-	Menu_Back_Button,
-	Button,
+	Menu_Back_Button,//メニューに行くとき？
+	Button,//
 
 	//ギミック
 	Hole_in_Drop,
@@ -43,8 +43,8 @@ public enum SEType {
 
 	//死亡
 	Bomb_Big,
-	Bomb_Small,
-	Drop_Out,
+	Bomb_Small,//
+	Drop_Out,//
 }
 
 /// <summary>

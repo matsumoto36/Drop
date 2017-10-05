@@ -305,6 +305,8 @@ public class Player : MonoBehaviour {
 	/// <returns></returns>
 	IEnumerator ChangeSize(Vector3 size) {
 
+		if(isDeath) yield break;
+
 		var changeTime = 1.0f;
 		var t = 0.0f;
 
@@ -344,6 +346,8 @@ public class Player : MonoBehaviour {
 
 	IEnumerator PlayerDeathAnim(DeathType type) {
 
+		if(isDeath) yield break;
+
 		isDeath = true;
 		GetComponent<Collider2D>().enabled = false;
 
@@ -370,6 +374,9 @@ public class Player : MonoBehaviour {
 			var g = Instantiate(deathEffect, transform.position, Quaternion.identity);
 			Destroy(g.gameObject, 2.0f);
 		}
+
+		AudioManager.Play(SEType.Bomb_Small);
+
 	}
 
 	public void _SetPoison() {

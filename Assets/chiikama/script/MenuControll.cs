@@ -17,7 +17,7 @@ public class MenuControll : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		AudioManager.FadeIn(1, BGMType.Menu);
 	}
 	
 	// Update is called once per frame

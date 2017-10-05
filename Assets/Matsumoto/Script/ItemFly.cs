@@ -4,28 +4,26 @@ using UnityEngine;
 
 public class ItemFly : MonoBehaviour {
 	Player player;
-	void Start()
-	{
+	void Start() {
 		player = FindObjectOfType<Player>();
 	}
 
-	void OnTriggerEnter2D(Collider2D col)
-	{
-		if (col.gameObject.tag == "Player")
-		{
-					Debug.Log("poison");
-					player.SetStatus(PlayerStatus.Fly, 10.0f);
-			        Destroy(gameObject);
+	void OnTriggerEnter2D(Collider2D col) {
+		if(col.gameObject.tag == "Player") {
+			Debug.Log("poison");
+			AudioManager.Play(SEType.Jump);
+			player.SetStatus(PlayerStatus.Fly, 10.0f);
+			Destroy(gameObject);
 		}
 
-			}
+	}
 
-		}
-	
-	// Use this for initialization
+}
+
+// Use this for initialization
 
 
-	
-	// Update is called once per frame
+
+// Update is called once per frame
 
 

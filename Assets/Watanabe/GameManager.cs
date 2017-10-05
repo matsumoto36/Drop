@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour {
 
         stagelength = FloorMove.GoalPos;
 
+		AudioManager.FadeIn(2, BGMType.Game);
+
 		StartCoroutine(CountDownGameManager());
 	}
     void Update () {
@@ -147,6 +149,8 @@ public class GameManager : MonoBehaviour {
         _textGameManager.text = "";
         _textGameManager.gameObject.SetActive(false);
 
+		AudioManager.Play(SEType.Start);
+
 		player.Initialize();
 
 		//ひとまずタイムアタック
@@ -154,6 +158,10 @@ public class GameManager : MonoBehaviour {
     }
 
 	IEnumerator ResultAnim() {
+
+		yield return new WaitForSeconds(1);
+
+		AudioManager.Play(SEType.Clear_Goal);
 
 		//スコアをアニメーション
 		yield return StartCoroutine("ScoreCount", 5f);//早さ
@@ -166,6 +174,21 @@ public class GameManager : MonoBehaviour {
 			rankImage.enabled = true;
 			rankImage.sprite = rankSprList[rank];
 		}
+
+		//待機ループ
+		while(true) {
+			if(Input.GetMouseButtonDown(0)) break;
+			yield return null;
+		}
+
+		//シーン移動
+		//SceneFader.MoveToScene("", SceneMoveType.Long);
+	}
+
+	IEnumerator GameOverAnim() {
+		yield return new WaitForSeconds(1);
+
+		AudioManager.Play(SEType.Game_Over);
 
 		//待機ループ
 		while(true) {

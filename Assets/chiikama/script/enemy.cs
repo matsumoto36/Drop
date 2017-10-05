@@ -25,6 +25,7 @@ public class enemy : MonoBehaviour {
 			}
 			else
 			{
+				AudioManager.Play(SEType.Worm);
 				Debug.Log("damege");
 				player.Damage(10);
 			}
