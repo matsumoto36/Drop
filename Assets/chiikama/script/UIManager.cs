@@ -21,6 +21,9 @@ public class UIManager : MonoBehaviour
 
 	public void RetryButton()
 	{
+		AudioManager.Play(SEType.Button);
+		AudioManager.FadeOut(1);
+
 		SceneFader.MoveToScene("Game", SceneMoveType.Short);
 	}
 	public void BackButton()
@@ -30,6 +33,9 @@ public class UIManager : MonoBehaviour
 
 	public void MenuButton()
 	{
+		AudioManager.Play(SEType.Button);
+		AudioManager.FadeOut(1);
+
 		SceneFader.MoveToScene("MenuScene", SceneMoveType.Short);
 	}
 
@@ -57,6 +63,9 @@ public class UIManager : MonoBehaviour
 	public void ToggleMenu()
 	{
 		if (isFreeze) return;
+
+		AudioManager.Play(SEType.Button);
+
 		isActiveMenu = !isActiveMenu;
 		GameMenu.SetActive(isActiveMenu);
 		SetPause(isActiveMenu);

@@ -13,7 +13,7 @@ public class SEvolume : MonoBehaviour
 	void Start()
 	{
 		float Volume;
-		mixer.GetFloat("SEvolume", out Volume);
+		mixer.GetFloat("SEVolume", out Volume);
 		GetComponent<Slider>().value = Volume;
 
 	}

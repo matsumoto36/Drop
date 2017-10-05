@@ -78,7 +78,7 @@ public class Player : MonoBehaviour {
 	float[] statusDuration;
 
 	//フラグ
-	bool isDeath;
+	public bool isDeath;
 
 	public int HP {
 		get; private set;
@@ -145,6 +145,7 @@ public class Player : MonoBehaviour {
 	public bool IsConfStatus(PlayerStatus status) {
 
 		if(status != PlayerStatus.None) {
+			Debug.Log(status.ToString() + " " + (statusDuration[(int)status] != 0).ToString());
 			return statusDuration[(int)status] != 0;
 		}
 
@@ -200,6 +201,8 @@ public class Player : MonoBehaviour {
 
 		if(isDeath) return;
 		Debug.Log("Player Death");
+
+		HP = 0;
 
 		//死亡時のアニメーション開始
 		StartCoroutine(PlayerDeathAnim(type));
@@ -293,6 +296,11 @@ public class Player : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator ContinuationDamage() {
+
+		while(!enabled) {
+			yield return null;
+		}
+
 		yield return new WaitForSeconds(secPerDamage);
 		Damage(1);
 		StartCoroutine(ContinuationDamage());
@@ -348,7 +356,6 @@ public class Player : MonoBehaviour {
 
 		if(isDeath) yield break;
 
-		isDeath = true;
 		GetComponent<Collider2D>().enabled = false;
 
 		if(type == DeathType.Hole) {
@@ -358,6 +365,8 @@ public class Player : MonoBehaviour {
 		//サイズを小さくする
 		if(changeSizeRoutine != null) StopCoroutine(changeSizeRoutine);
 		changeSizeRoutine = StartCoroutine(ChangeSize(new Vector3()));
+
+		isDeath = true;
 
 		float t = 0f;
 		while(t < 1.0f) {

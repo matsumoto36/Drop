@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
     public float limitTime;		//制限時間
-    public Text timetext;
 
     public float playerpos;
     public float stagelength;
@@ -62,7 +61,6 @@ public class GameManager : MonoBehaviour {
 
         //ここに時間の制御
         time -= Time.deltaTime;
-        timetext.text = time.ToString("00.00");
 
         //タイムアップ
         if(time < 0)
@@ -85,15 +83,6 @@ public class GameManager : MonoBehaviour {
 
 		Debug.Log("GameClear");
 
-		isPlayGame = false;
-		player.canInput = false;
-
-		//スコアの計算
-		score = CalcScore();
-
-		//リザルトを表示
-		resultPanel.gameObject.SetActive(true);
-
 		//アニメーションを再生
 		StartCoroutine(ResultAnim());
 	}
@@ -104,9 +93,25 @@ public class GameManager : MonoBehaviour {
 	public void GameOver() {
         Debug.Log("GameOver");
 
-        timetext.text = time.ToString("00.00");
-
         isPlayGame = false;
+
+		StartCoroutine(ResultAnim());
+	}
+
+	public void BackButton() {
+
+		AudioManager.Play(SEType.Button);
+		AudioManager.FadeOut(1);
+
+		SceneFader.MoveToScene("MenuScene", SceneMoveType.Short);
+	}
+
+	public void RetryButton() {
+
+		AudioManager.Play(SEType.Button);
+		AudioManager.FadeOut(1);
+
+		SceneFader.MoveToScene("Game", SceneMoveType.Short);
 	}
 
 	/// <summary>
@@ -159,45 +164,39 @@ public class GameManager : MonoBehaviour {
 
 	IEnumerator ResultAnim() {
 
-		yield return new WaitForSeconds(1);
+		isPlayGame = false;
+		player.canInput = false;
 
-		AudioManager.Play(SEType.Clear_Goal);
+		//スコアの計算
+		score = CalcScore();
 
-		//スコアをアニメーション
-		yield return StartCoroutine("ScoreCount", 5f);//早さ
+		yield return new WaitForSeconds(2);
+
+		//リザルトを表示
+		resultPanel.gameObject.SetActive(true);
+
+		if(player.isDeath) {
+			AudioManager.Play(SEType.Game_Over);
+		}
+		else {
+			AudioManager.Play(SEType.Clear_Goal);
+		}
+
+
 
 		//順位発表
 		RankingManager.LoadRanking();
 		RankingManager.SetRankData(score);
+		RankingManager.SaveRanking();
+
+		//スコアをアニメーション
+		yield return StartCoroutine("ScoreCount", 5f);//早さ
+
 		var rank = RankingManager.GetRank(score);
 		if(rank < 3) {
 			rankImage.enabled = true;
 			rankImage.sprite = rankSprList[rank];
 		}
-
-		//待機ループ
-		while(true) {
-			if(Input.GetMouseButtonDown(0)) break;
-			yield return null;
-		}
-
-		//シーン移動
-		//SceneFader.MoveToScene("", SceneMoveType.Long);
-	}
-
-	IEnumerator GameOverAnim() {
-		yield return new WaitForSeconds(1);
-
-		AudioManager.Play(SEType.Game_Over);
-
-		//待機ループ
-		while(true) {
-			if(Input.GetMouseButtonDown(0)) break;
-			yield return null;
-		}
-
-		//シーン移動
-		//SceneFader.MoveToScene("", SceneMoveType.Long);
 	}
 
 	/// <summary>

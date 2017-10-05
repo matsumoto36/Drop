@@ -8,21 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/chiikama/Scene/TitleScene.unity
     guid: 59b7bbb95ff897148ad717b2e28d1dfa
-  - enabled: 0
-    path: Assets/chiikama/Scene/GameScene.unity
-    guid: 9fb94eebd87755c418a8831e43bb1550
   - enabled: 1
     path: Assets/chiikama/Scene/MenuScene.unity
     guid: a2ec2183e3d7c43448a0e495e76be92a
   - enabled: 1
-    path: Assets/chiikama/Scene/test.unity
-    guid: 97837f372ecf74e4eac291719900a187
-  - enabled: 0
-    path: Assets/chiikama/Scene/OptionScene.unity
-    guid: 659525367179b0d458e7ff9b8041ce2d
-  - enabled: 0
-    path: Assets/chiikama/Scene/ResultScene.unity
-    guid: bc86abdb1ddd61c4d8bfc95ea6ae386f
-  - enabled: 1
     path: Assets/Scenes/Game.unity
+    guid: b9ade069f42b13442b112019b3e33544
+  - enabled: 1
+    path: Assets/Scenes/RankingScene.unity
     guid: 00000000000000000000000000000000

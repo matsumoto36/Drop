@@ -18,6 +18,10 @@ public class DebugGyroInterface : MonoBehaviour {
 	bool isPanelClick;
 
 	void Awake() {
+		if(!Application.isEditor) {
+			panelTransform.gameObject.SetActive(false);
+		}
+
 		if(myInterface) {
 			Destroy(gameObject);
 		}

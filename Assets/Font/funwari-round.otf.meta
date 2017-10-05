@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 58538b14c31f9a242b84dc22e0da93b7
+timeCreated: 1507164269
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: funwariround
+  fontNames:
+  - funwariround
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

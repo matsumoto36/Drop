@@ -13,7 +13,7 @@ public class BGMvolume : MonoBehaviour
 	void Start()
 	{
 		float Volume;
-		mixer.GetFloat("BGMvolume", out Volume);
+		mixer.GetFloat("BGMVolume", out Volume);
 		GetComponent<Slider>().value = Volume;
 
 	}
