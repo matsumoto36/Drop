@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour {
         _textGameManager.text = "1";
         yield return new WaitForSeconds(1.0f);
 
-        _textGameManager.text = "スタート！";
+        _textGameManager.text = "すたーと！";
         yield return new WaitForSeconds(1.0f);
 
         isPlayGame = true;
